@@ -4,7 +4,7 @@
 	http://krasimirtsonev.com/blog/article/A-modern-JavaScript-router-in-100-lines-history-api-pushState-hash-url
 */
 
-function Router(){
+function OldRouter(){
 	this.currentPage = "";
 	this.routes = [];
 	this.mode = null;
