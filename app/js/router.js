@@ -54,17 +54,11 @@ function Router(){
 	this.regex = /(#[A-Z]*)\w+/g;
 	
 	this.listen = function(){
-		console.log("checking changes on url");
-		console.log(this.lastJobPage);
-		console.log(this.currentPage);
 		if(this.lastJobPage != this.currentPage){
 			var currentCall = this.regex.exec(this.currentPage)[0].replace("#","");
-			console.log("DEBUG: Found call: " + currentCall);
 			for(var i = 0; i < this.routes.length; i++){
 				if(this.routes[i].getName() == currentCall){
-					console.log("DEBUG: Found route");
-					console.log(this.routes[i]);
-					console.log(this.routes[i].getBehavior());
+					this.routes[i].behavior();
 				}
 			}
 		}
