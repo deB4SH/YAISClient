@@ -5,12 +5,32 @@ connection.onopen = function(){
 }
 */
 
+var routeCheck = new Route();
+var checkFunc = function(){
+      alert("check");
+}
+routeCheck.createRoute("check",checkFunc);
 
+var routeAbout = new Route();
+var aboutFunc = function(){
+      alert("about");
+}
+routeAbout.createRoute("about",aboutFunc);
 
 var router = new Router();
-router.config({mode: "history"});
+router.createRouter("history");
+router.addRoute(routeAbout);
+router.addRoute(routeCheck);
+
+router.navigate("about");
+
 window.setInterval(router.listen(),1000);
 
+
+
+/*
+router.config({mode: "history"});
+window.setInterval(router.listen(),1000);
 router.navigate();
 
 router.addRoute(/about/,function(){
@@ -24,3 +44,4 @@ router.listen();
 
 
 router.navigate("/about");
+*/
