@@ -1,13 +1,14 @@
+/**
+ * app/js/route.js
+ * -Class for the route
+ * -- contains informations about the subinformations and functions
+ * -- contains handle to switch page content
+ */
 function Route(){
 	this.name = "";
 	this.behavior = function(){};
 	
 	this.createRoute = function(name, behavior){
-		
-		console.log(name);
-		console.log(behavior);
-		
-		
 		this.name = name;
 		this.behavior = behavior;
 	}

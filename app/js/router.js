@@ -1,3 +1,10 @@
+/**
+ * app/js/router.js
+ * -Class for routing information 
+ * -- contains x-many routings
+ * -- handles page updates based on url
+ * -- contains job that runs on interval (listen)
+ */
 function Router(){
 	
 	this.currentPage = null;
