@@ -1,0 +1,31 @@
+body{
+	background-color: #F4D39B;
+}
+
+.headnavigation{
+	height: 30px;	
+	background-color: #F0F0F0;
+	-webkit-box-shadow: 0px 4px 0px 0px rgba(3,17,54,1);
+	-moz-box-shadow: 0px 4px 0px 0px rgba(3,17,54,1);
+	box-shadow: 0px 4px 0px 0px rgba(3,17,54,1);
+}
+
+.logo{
+	height: 125px;
+	width: 100%;
+	
+	margin-top: 25px;
+}
+
+.content-box{
+	
+	background-color: #F0F0F0;
+	-webkit-box-shadow: 0px -4px 0px 0px rgba(3,17,54,1);
+	-moz-box-shadow: 0px -4px 0px 0px rgba(3,17,54,1);
+	box-shadow: 0px -4px 0px 0px rgba(3,17,54,1);
+	
+	background-color: #F0F0F0;
+	-webkit-box-shadow: 0px 4px 0px 0px rgba(3,17,54,1);
+	-moz-box-shadow: 0px 4px 0px 0px rgba(3,17,54,1);
+	box-shadow: 0px 4px 0px 0px rgba(3,17,54,1);
+}

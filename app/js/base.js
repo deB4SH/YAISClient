@@ -29,7 +29,7 @@ function Base(){
 
 		var routeAbout = new Route();
 		var aboutFunc = function(){
-			alert("about");
+			
 		}
 		routeAbout.createRoute("about",aboutFunc);
 		
