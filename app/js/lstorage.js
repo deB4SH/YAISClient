@@ -24,9 +24,6 @@ function LStorage(){
 			if(this.getItem("timed-"+key) != "false"){
 				localStorage.setItem("timed-"+key,Date.getTime());
 			}
-			else{
-				Console.log("INFO-LS: timestamp not required")
-			}
 		}
 		else{
 			this.removeItem(key);
