@@ -1,15 +1,15 @@
 /*
-var connection = new WebSocket('ws://127.0.0.1:60000');
-connection.onopen = function(){
-      connection.send("PING");
+
 }
 */
 
 var baseutils = new Base();
 
 var router = new Router();
+var socket = new Socket();
+
 router.createRouter("history");
-baseutils.createBase(router);
+baseutils.createBase(router,socket);
 baseutils.setup();
 
 router.navigate("about");

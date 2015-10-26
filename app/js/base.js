@@ -8,12 +8,14 @@
  */
 function Base(){
 	this.router = null;
+	this.socket = null;
 	
 	/**
 	 * create the baseutils and get the router reference to manage all routes
 	 */
-	this.createBase = function(router){
+	this.createBase = function(router,socket){
 		this.router = router;
+		this.socket = socket;
 	}
 	
 	/**
@@ -21,6 +23,7 @@ function Base(){
 	 * also creates the basic functions to change the page content
 	 */
 	this.setup = function(){
+		//create Router
 		var routeCheck = new Route();
 		var checkFunc = function(){
       		alert("check");
@@ -35,6 +38,8 @@ function Base(){
 		
 		this.router.addRoute(routeAbout);
 		this.router.addRoute(routeCheck);
+		
+		this.socket.createSocket(new WebSocket('ws://127.0.0.1:60000'));
 	}
 	
 }
