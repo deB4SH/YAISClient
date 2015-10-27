@@ -34,12 +34,19 @@ function Base(){
 		var aboutFunc = function(){
 			
 		}
-		routeAbout.createRoute("about",aboutFunc);
+		
+		var aboutTemplate = "Single origin crema acerbic, skinny lungo froth beans french press fair trade that. Wings aftertaste ristretto milk whipped single shot, turkish dripper acerbic frappuccino black. Fair trade qui crema, skinny extraction extra wings extra café au lait pumpkin spice. Filter rich and dripper milk half and half aged. Aftertaste mug french press dark, a and froth dark black mocha.Skinny cream, sweet blue mountain steamed to go foam ristretto. Frappuccino plunger pot foam ristretto spoon cappuccino robusta. Americano, medium brewed a, caffeine kopi-luwak espresso robust grounds. Cinnamon medium froth, bar to go eu turkish steamed aftertaste kopi-luwak. Flavour foam grounds dripper flavour acerbic steamed viennese.";
+		
+		routeAbout.createRoute("about",aboutFunc,aboutTemplate);
 		
 		this.router.addRoute(routeAbout);
 		this.router.addRoute(routeCheck);
 		
+		//socket
 		this.socket.createSocket(new WebSocket('ws://127.0.0.1:60000'));
+		this.router.linkSocket(this.socket);
+		
+		
 	}
 	
 }

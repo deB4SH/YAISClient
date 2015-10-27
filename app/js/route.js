@@ -37,7 +37,16 @@ function Route(){
 				outputTemplate += this.template.getOutput(handleDataset[i]);
 			}	
 		}
-		
+		return outputTemplate;
 	}
 	
+	/**
+	 * change contents on webpage
+	 */
+	this.updateWeb = function(handleDataset){
+		var anchor = document.getElementById("main-text");
+		var span = document.createElement("span");
+		span.innerHTML = this.renderTemplate(handleDataset);
+		anchor.parentNode.replaceChild(span,anchor);
+	}
 }

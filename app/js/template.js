@@ -18,9 +18,8 @@ function Template(){
 	this.getOutput = function(handleData){
 		if(handleData instanceof Array){
 			for(var i = 0; i < handleData.length; i++){
-				
-				//TODO: replace keys and data in baseTemplate
-				
+				var template = this.baseTemplate;
+				template.replace("{" + handleData[i].getKey() + "}", handleData[i].getData());
 			}
 		}
 		else{

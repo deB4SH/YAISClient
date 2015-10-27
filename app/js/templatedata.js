@@ -13,7 +13,7 @@ function TemplateData(){
 		return this.key;
 	}
 	
-	this.getDat = function(){
+	this.getData = function(){
 		return this.data;
 	}
 	

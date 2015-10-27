@@ -12,6 +12,7 @@ function Router(){
 	this.root = "/";
 	this.limiter = "#";
 	this.mode = null;
+	this.socket = null;
 	
 	
 	this.createRouter = function(handleHistory){
@@ -20,6 +21,10 @@ function Router(){
 		this.root = window.location.href;
 		this.currentPage = this.root;
 		this.lastJobPage = this.root;
+	}
+	
+	this.linkSocket = function(socket){
+		this.socket = socket;
 	}
 	
 	this.addRoute = function(handleRoute){
@@ -65,7 +70,15 @@ function Router(){
 			var currentCall = this.regex.exec(this.currentPage)[0].replace("#","");
 			for(var i = 0; i < this.routes.length; i++){
 				if(this.routes[i].getName() == currentCall){
+					
+					//TODO: requesting new data from socket (if exists)
+					
+					//TODO: process data
+					
+					//TODO: behavior on each page
 					this.routes[i].behavior();
+					
+					//TODO: render Outcome
 				}
 			}
 		}
