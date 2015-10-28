@@ -1,27 +1,69 @@
 function Socket(){
 	
 	/**
-	 * Variable
-	 */
-	var connection = socket;
+	* Variable
+	*/
+	var self = this;
+	var connection = null;
+	var output = "";
+	var connectionRdy = false;
+	var messageStack = [];
+	
 	
 	/**
-	 * Public Functions
-	 */	
-	this.createSocket = function(handleSocket){
-		connection = handleSocket;
-		
-		connection.onopen = function(){
-			connection.send("PING");
-		}
-		
+	* Private Functions
+	*/
+	var _onOpen = function(event){
+		console.log("[SOCKET]:[CONNECTED TO WS]");
+		self.sendMessage("HEY");
+	}
+	
+	var _onClose = function(event){
+		console.log("[SOCKET]:[CONNECTION CLOSED]");
 	}
 	
 	
-	
-	
 	/**
-	 * Private Functions
-	 */
+	* Public Functions
+	*/ 
 	
+	this.init = function(uri){
+		this.connection = new WebSocket(uri);
+	
+		this.connection.onopen = function(event){
+			_onOpen(event);
+		}
+	
+		this.connection.onclose = function(event){
+			_onClose(event);
+		}
+	}
+	
+	this.sendMessage = function(message){
+		messageStack.push(message);
+		var stack = messageStack.reverse();
+		if(self.connection.readyState == 1){
+			self.connection.send(stack.pop());
+		}
+		
+		//check if there are some messages in stack
+		if(self.connection.readyState == 1){
+			if(stack.length > 0){
+			for(var i = 0; i < stack.length; i++){	
+					self.connection.send(messageStack.pop());	
+				}	
+			}
+		}		
+	}
+	
+	this.getMessageStack = function(){
+		return messageStack;
+	}
+	
+	this.backgroundWorker = function(){
+		console.log("background worker call");
+		if(self.connection.readyState == 1){
+			self.connection.send(messageStack.pop());	
+		}
+	}
 }

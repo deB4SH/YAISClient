@@ -13,7 +13,7 @@ function Base(){
 	/**
 	 * create the baseutils and get the router reference to manage all routes
 	 */
-	this.createBase = function(router,socket){
+	this.createBase = function(router, socket){
 		this.router = router;
 		this.socket = socket;
 	}
@@ -43,7 +43,6 @@ function Base(){
 		this.router.addRoute(routeCheck);
 		
 		//socket
-		this.socket.createSocket(new WebSocket('ws://127.0.0.1:60000'));
 		this.router.linkSocket(this.socket);
 		
 		
