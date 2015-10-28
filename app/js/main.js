@@ -19,4 +19,5 @@ baseutils.setup();
 
 router.navigate("about");
 
-window.setInterval(router.listen(),1000);
+window.setInterval(router.listen,1000);
+window.setInterval(socket.backgroundWorker, 1000);

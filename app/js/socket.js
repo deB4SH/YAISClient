@@ -41,15 +41,14 @@ function Socket(){
 	
 	this.sendMessage = function(message){
 		messageStack.push(message);
-		var stack = messageStack.reverse();
 		if(self.connection.readyState == 1){
-			self.connection.send(stack.pop());
+			self.connection.send(messageStack.pop());
 		}
 		
 		//check if there are some messages in stack
 		if(self.connection.readyState == 1){
-			if(stack.length > 0){
-			for(var i = 0; i < stack.length; i++){	
+			if(messageStack.length > 0){
+			for(var i = 0; i < messageStack.length; i++){	
 					self.connection.send(messageStack.pop());	
 				}	
 			}
@@ -62,8 +61,10 @@ function Socket(){
 	
 	this.backgroundWorker = function(){
 		console.log("background worker call");
-		if(self.connection.readyState == 1){
+		if(messageStack.length > 0){
+			if(self.connection.readyState == 1){
 			self.connection.send(messageStack.pop());	
+			}	
 		}
 	}
 }
