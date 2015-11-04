@@ -13,6 +13,7 @@ function Router(){
 	this.limiter = "#";
 	this.mode = null;
 	this.socket = null;
+	this.regex = /(#[A-Z]*)\w+/g;
 	
 	
 	this.createRouter = function(handleHistory){
@@ -41,6 +42,8 @@ function Router(){
 	
 	this.navigate = function(handlePath){
 		if(handlePath != ""){
+			this.root = this.root.split("#")[0];
+			console.log(this.root);
 			var found = false;
 			for(var i = 0; i < this.routes.length; i++){
 				if(this.routes[i].getName() == handlePath){
@@ -63,14 +66,13 @@ function Router(){
 	 * Job Functions
 	 */
 	this.lastJobPage = null;
-	this.regex = /(#[A-Z]*)\w+/g;
 	
-	this.listen = function(){
+	this.listen = function(){	
 		if(this.lastJobPage != this.currentPage){
 			var currentCall = this.regex.exec(this.currentPage)[0].replace("#","");
 			for(var i = 0; i < this.routes.length; i++){
 				if(this.routes[i].getName() == currentCall){
-					
+					console.log(currentCall);
 					//TODO: requesting new data from socket (if exists)
 					
 					//TODO: process data
@@ -79,6 +81,7 @@ function Router(){
 					this.routes[i].behavior();
 					
 					//TODO: render Outcome
+					this.routes[i].updateWeb();
 				}
 			}
 		}

@@ -1,7 +1,3 @@
-/*
-
-}
-*/
 var baseutils = new Base();
 var router = new Router();
 var socket = new Socket();

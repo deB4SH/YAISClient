@@ -28,7 +28,7 @@ function Socket(){
 	*/ 
 	
 	this.init = function(uri){
-		this.connection = new WebSocket(uri);
+		this.connection = new WebSocket(uri); 
 	
 		this.connection.onopen = function(event){
 			_onOpen(event);
@@ -60,7 +60,6 @@ function Socket(){
 	}
 	
 	this.backgroundWorker = function(){
-		console.log("background worker call");
 		if(messageStack.length > 0){
 			if(self.connection.readyState == 1){
 			self.connection.send(messageStack.pop());	
