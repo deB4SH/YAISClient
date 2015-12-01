@@ -18,7 +18,10 @@ function Message(){
 										{"messageSubType": ` + this.messageSubType + `},
 										{"message": ` + this.message + `}	
 									  ]
-						}`
+						}`;
+						
+		return request;
+						
 	}
 	
 }
