@@ -14,6 +14,7 @@ function Message(messageType, messageSubType, message){
 									  ]
 						}`;
 						
+		console.log(request);
 		return request;
 	}
 	
