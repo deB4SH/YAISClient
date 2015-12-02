@@ -43,7 +43,6 @@ function Router(){
 	this.navigate = function(handlePath){
 		if(handlePath != ""){
 			this.root = this.root.split("#")[0];
-			console.log(this.root);
 			var found = false;
 			for(var i = 0; i < this.routes.length; i++){
 				if(this.routes[i].getName() == handlePath){
