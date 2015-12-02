@@ -7,7 +7,7 @@ var message = new Message(messageType.getUserCode(),"001","hello there");
 
 socket.init("ws://" + config.getwsAdress() + ":" + config.getwsPort());
 //socket.sendMessage("testing 723");	
-socket.sendMessage(message);
+socket.sendMessage(message.buildRequest());
 	
 router.createRouter("history");
 baseutils.createBase(router, socket);
