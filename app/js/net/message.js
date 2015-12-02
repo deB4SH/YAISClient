@@ -9,9 +9,9 @@ function Message(messageType, messageSubType, message){
 		var request = `{
 							"request":
 							{
-								"messageType": '"'` + this.messageType  + `'",'
-								"messageSubType": '"'` + this.messageSubType + `'",'
-								"message": '"'` + this.message + `}'"'	
+								"messageType": %22` +  + this.messageType  + `'%22,'
+								"messageSubType": %22` + this.messageSubType + `'%22,'
+								"message": %22` + this.message + `%22	
 									  
 							}`;
 						
