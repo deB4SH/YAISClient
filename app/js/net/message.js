@@ -6,14 +6,13 @@ function Message(messageType, messageSubType, message){
 	this.message= message;
 	
 	this.buildRequest = function(){
-		var request = `{
-							"request":
-							{
-								"messageType": %22` +  + this.messageType  + `'%22,'
-								"messageSubType": %22` + this.messageSubType + `'%22,'
-								"message": %22` + this.message + `%22	
-									  
-							}`;
+		
+		var requestObj = new Object();
+		requestObj.messageType = this.messageType;
+		requestObj.messageSubType = this.messageSubType;
+		requestObj.message = this.message;
+		
+		var request = JSON.stringify(requestObj);
 						
 		console.log(request);
 		return request;
