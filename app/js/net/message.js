@@ -1,15 +1,9 @@
 
-function Message(){
+function Message(messageType, messageSubType, message){
 	
-	this.messageType ="";
-	this.messageSubType = "";
-	this.message="";
-	
-	this.createMessage = function(messageType, messageSubType, message){
-		this.messageType = messageType;
-		this.messageSubType = messageType;
-		this.message = message;
-	}
+	this.messageType = messageType;
+	this.messageSubType = messageSubType;
+	this.message= message;
 	
 	this.buildRequest = function(){
 		var request = `{
@@ -21,7 +15,10 @@ function Message(){
 						}`;
 						
 		return request;
-						
+	}
+	
+	this.restoreFromJson = function(handleJson){
+		
 	}
 	
 }
