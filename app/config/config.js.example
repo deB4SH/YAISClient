@@ -1,0 +1,16 @@
+
+function Config(){
+	
+	this.wsAdress = "127.0.0.1"; //replace this with your websocket adress
+	this.wsPort = "60000"; //replace this with your websocket port
+	
+	
+	this.getwsAdress = function(){
+		return this.wsAdress;
+	}
+	
+	this.getwsPort = function(){
+		return this.wsPort;
+	}
+	
+}

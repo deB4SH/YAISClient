@@ -1,7 +1,8 @@
 var baseutils = new Base();
 var router = new Router();
 var socket = new Socket();
-socket.init("ws://127.0.0.1:60000");
+var config = new Config();
+socket.init("ws://" + config.getwsAdress + ":" + config.getwsPort);
 socket.sendMessage("testing 123");
 socket.sendMessage("testing 423");
 socket.sendMessage("testing 523");
