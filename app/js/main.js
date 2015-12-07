@@ -4,7 +4,7 @@ var socket = new Socket();
 var config = new Config();
 var messageType = new MessageType();
 var messageSubType = new MessageSubType();
-var message = new Message(messageType.getUserCode(),messageSubType.getDataRoom(),"hello there");
+var message = new Message(messageType.getUserCode(),messageSubType.getUserLogon(),"hello there");
 
 socket.init("ws://" + config.getwsAdress() + ":" + config.getwsPort());
 //socket.sendMessage("testing 723");	
