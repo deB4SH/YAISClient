@@ -1,0 +1,29 @@
+
+function MessageSubType(){
+	
+	//USER
+	this.getUserLogon = function(){
+		return "01";
+	}
+	
+	this.getUserLogoff = function(){
+		return "02";	
+	}
+	
+	//DATA
+	this.getDataRoom = function(){
+		return "01";
+	}
+	
+	this.getDataCabinet = function(){
+		return "02";
+	}
+	
+	this.getCabinetRow = function(){
+		return "03";
+	}
+	
+	this.getDossier = function(){
+		return "04";
+	}
+}

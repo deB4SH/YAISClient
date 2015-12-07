@@ -3,7 +3,8 @@ var router = new Router();
 var socket = new Socket();
 var config = new Config();
 var messageType = new MessageType();
-var message = new Message(messageType.getUserCode(),"001","hello there");
+var messageSubType = new MessageSubType();
+var message = new Message(messageType.getUserCode(),messageSubType.getDataRoom(),"hello there");
 
 socket.init("ws://" + config.getwsAdress() + ":" + config.getwsPort());
 //socket.sendMessage("testing 723");	
