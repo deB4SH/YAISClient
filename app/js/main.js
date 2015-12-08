@@ -2,18 +2,15 @@ var baseutils = new Base();
 var router = new Router();
 var socket = new Socket();
 var config = new Config();
-
-
 var messageType = new MessageType();
 var messageSubType = new MessageSubType();
-var user = new mdlUser();
-user.createUser("herpderp","123123");
-
-var message = new Message(messageType.getUserCode(),messageSubType.getUserLogon(),user.getJSON());
+var testUC= new userCreation(socket, messageType, messageSubType);
 
 socket.init("ws://" + config.getwsAdress() + ":" + config.getwsPort());
 //socket.sendMessage("testing 723");	
-socket.sendMessage(message.buildRequest());
+//socket.sendMessage(message.buildRequest());
+	
+testUC.createTestUser();
 	
 router.createRouter("history");
 baseutils.createBase(router, socket);

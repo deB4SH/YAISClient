@@ -10,6 +10,10 @@ function MessageSubType(){
 		return "02";	
 	}
 	
+	this.getUserRegistration = function(){
+		return "03";	
+	}
+	
 	//DATA
 	this.getDataRoom = function(){
 		return "01";
