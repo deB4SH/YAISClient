@@ -6,3 +6,5 @@ dist/
 nbdist/
 nbactions.xml
 .nb-gradle/
+project.properties
+project.xml
