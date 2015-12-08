@@ -14,14 +14,17 @@ function Socket(){
 	* Private Functions
 	*/
 	var _onOpen = function(event){
-		console.log("[SOCKET]:[CONNECTED TO WS]");
-		self.sendMessage("HEY");
+            console.log("[SOCKET]:[CONNECTED TO WS]");
+            self.sendMessage("HEY");
 	}
 	
 	var _onClose = function(event){
-		console.log("[SOCKET]:[CONNECTION CLOSED]");
+            console.log("[SOCKET]:[CONNECTION CLOSED]");
 	}
 	
+        var _onMessage = function(event){
+            console.log(event.data);
+        }
 	
 	/**
 	* Public Functions
@@ -31,12 +34,16 @@ function Socket(){
 		this.connection = new WebSocket(uri); 
 	
 		this.connection.onopen = function(event){
-			_onOpen(event);
+                    _onOpen(event);
 		}
 	
 		this.connection.onclose = function(event){
-			_onClose(event);
+                    _onClose(event);
 		}
+                
+                this.connection.onmessage = function(event){
+                    _onMessage(event);
+                }
 	}
 	
 	this.sendMessage = function(message){
