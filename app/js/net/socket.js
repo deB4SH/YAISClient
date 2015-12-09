@@ -8,7 +8,7 @@ function Socket(){
 	var output = "";
 	var connectionRdy = false;
 	var messageStack = [];
-	
+	var messageParser = null;
 	
 	/**
 	* Private Functions
@@ -23,14 +23,16 @@ function Socket(){
 	}
 	
         var _onMessage = function(event){
-            console.log(event.data);
+            messageParser.addMessage(event.data);
+            //console.log(event.data);
         }
 	
 	/**
 	* Public Functions
 	*/ 
 	
-	this.init = function(uri){
+	this.init = function(uri, messageparser){
+                messageParser = messageparser;
 		this.connection = new WebSocket(uri); 
 	
 		this.connection.onopen = function(event){
