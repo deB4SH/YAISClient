@@ -31,13 +31,14 @@ function Route(){
 	 * handleDataset is an array of templatedata
 	 */
 	this.renderTemplate = function(handleDataset){
-		if(handleDataset instanceof Array){
-			var outputTemplate = "";
-			for(var i=0; i < handleDataset.length; i++){
-				outputTemplate += this.template.getOutput(handleDataset[i]);
-			}	
-		}
-		return outputTemplate;
+            var outputTemplate = "";
+            if(handleDataset instanceof Array){
+                for(var i=0; i < handleDataset.length; i++){
+                        outputTemplate += this.template.getOutput(handleDataset[i]);
+                }	
+            }
+            console.log(outputTemplate);
+            return outputTemplate;
 	}
 	
 	/**
@@ -46,6 +47,8 @@ function Route(){
 	this.updateWeb = function(handleDataset){
 		var anchor = document.getElementById("main-text");
 		var span = document.createElement("span");
+                span.id = "main-text";
+                console.log(span);
 		span.innerHTML = this.renderTemplate(handleDataset);
 		anchor.parentNode.replaceChild(span,anchor);
 	}

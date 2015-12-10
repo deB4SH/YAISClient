@@ -23,27 +23,30 @@ function Base(){
 	 * also creates the basic functions to change the page content
 	 */
 	this.setup = function(){
-		//create Router
-		var routeCheck = new Route();
-		var checkFunc = function(){
-      		alert("check");
-		}
-		routeCheck.createRoute("check",checkFunc);
+            
+            console.log("[DEBUG]:creating Router and setting up routes");
+            //create Router
+            var routeCheck = new Route();
+            var checkFunc = function(){
+                alert("check");
+            }
+            var checkTemplate = "Single o";
+            routeCheck.createRoute("check",checkFunc,checkTemplate);
 
-		var routeAbout = new Route();
-		var aboutFunc = function(){
-			
-		}
-		
-		var aboutTemplate = "Single origin crema acerbic, skinny lungo froth beans french press fair trade that. Wings aftertaste ristretto milk whipped single shot, turkish dripper acerbic frappuccino black. Fair trade qui crema, skinny extraction extra wings extra café au lait pumpkin spice. Filter rich and dripper milk half and half aged. Aftertaste mug french press dark, a and froth dark black mocha.Skinny cream, sweet blue mountain steamed to go foam ristretto. Frappuccino plunger pot foam ristretto spoon cappuccino robusta. Americano, medium brewed a, caffeine kopi-luwak espresso robust grounds. Cinnamon medium froth, bar to go eu turkish steamed aftertaste kopi-luwak. Flavour foam grounds dripper flavour acerbic steamed viennese.";
-		
-		routeAbout.createRoute("about",aboutFunc,aboutTemplate);
-		
-		this.router.addRoute(routeAbout);
-		this.router.addRoute(routeCheck);
-		
-		//socket
-		this.router.linkSocket(this.socket);
+            var routeAbout = new Route();
+            var aboutFunc = function(){
+                    alert("running");
+            }
+
+            var aboutTemplate = "Single origin";
+
+            routeAbout.createRoute("about",aboutFunc,aboutTemplate);
+
+            this.router.addRoute(routeAbout);
+            this.router.addRoute(routeCheck);
+
+            //socket
+            this.router.linkSocket(this.socket);
 		
 		
 	}
