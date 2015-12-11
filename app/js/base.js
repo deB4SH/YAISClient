@@ -27,7 +27,7 @@ function Base(){
             console.log("[DEBUG]:creating Router and setting up routes");
             
             var loginRoute = new Route();
-            var loginFunction = function(){}
+            var loginFunction = function(){};
             var loginTemplate = new templateLogin().getBaseTemplate();
             loginRoute.createRoute("login",loginFunction,loginTemplate);
             this.router.addRoute(loginRoute);
@@ -38,6 +38,10 @@ function Base(){
             welcomeRoute.createRoute("welcome",welcomeFunction,welcomeTemplate);
             this.router.addRoute(welcomeRoute);
             
+            
+            var roomRoute = new Route();
+            var roomFunction = function(){};
+            var roomTemplate = new templateRoom().getBaseTemplate();
 
             //socket
             this.router.linkSocket(this.socket);
