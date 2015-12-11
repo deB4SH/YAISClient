@@ -8,6 +8,7 @@ function Route(){
 	this.name = "";
 	this.behavior = function(){};
 	this.template = "";
+        
 	
 	this.createRoute = function(name, behavior, template){
 		this.name = name;
@@ -30,26 +31,22 @@ function Route(){
 	/**
 	 * handleDataset is an array of templatedata
 	 */
-	this.renderTemplate = function(handleDataset){
-            var outputTemplate = "";
-            if(handleDataset instanceof Array){
-                for(var i=0; i < handleDataset.length; i++){
-                        outputTemplate += this.template.getOutput(handleDataset[i]);
-                }	
-            }
-            console.log(outputTemplate);
-            return outputTemplate;
+	this.renderTemplate = function(data){
+            var render = Mustache.render(this.template, data);
+            console.log(render);
+            return render;
+            
 	}
 	
 	/**
 	 * change contents on webpage
 	 */
-	this.updateWeb = function(handleDataset){
+	this.updateWeb = function(data){
 		var anchor = document.getElementById("main-text");
 		var span = document.createElement("span");
                 span.id = "main-text";
                 console.log(span);
-		span.innerHTML = this.renderTemplate(handleDataset);
+		span.innerHTML = this.renderTemplate(data);
 		anchor.parentNode.replaceChild(span,anchor);
 	}
 }

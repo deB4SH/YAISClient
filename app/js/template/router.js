@@ -69,6 +69,7 @@ function Router(){
             var currentPage = window.location.href + "";
             if(lastPage !== currentPage){
                     var currentCall = regex.exec(currentPage)[0].replace("#","");
+                    console.log(currentCall);
                     for(var i = 0; i < routes.length; i++){
                             if(routes[i].getName() == currentCall){
                                     //change lastPage

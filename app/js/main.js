@@ -35,7 +35,8 @@ router.createRouter("history");
 baseutils.createBase(router, socket);
 baseutils.setup();
 
-router.navigate("about");
+router.navigate("");
+router.navigate("welcome");
 
 window.setInterval(router.listen,1000);
 window.setInterval(socket.backgroundWorker, 1000);

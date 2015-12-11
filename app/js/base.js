@@ -25,25 +25,19 @@ function Base(){
 	this.setup = function(){
             
             console.log("[DEBUG]:creating Router and setting up routes");
-            //create Router
-            var routeCheck = new Route();
-            var checkFunc = function(){
-                alert("check");
-            }
-            var checkTemplate = "Single o";
-            routeCheck.createRoute("check",checkFunc,checkTemplate);
-
-            var routeAbout = new Route();
-            var aboutFunc = function(){
-                    alert("running");
-            }
-
-            var aboutTemplate = "Single origin";
-
-            routeAbout.createRoute("about",aboutFunc,aboutTemplate);
-
-            this.router.addRoute(routeAbout);
-            this.router.addRoute(routeCheck);
+            
+            var loginRoute = new Route();
+            var loginFunction = function(){}
+            var loginTemplate = new templateLogin().getBaseTemplate();
+            loginRoute.createRoute("login",loginFunction,loginTemplate);
+            this.router.addRoute(loginRoute);
+            
+            var welcomeRoute = new Route();
+            var welcomeFunction = function(){};
+            var welcomeTemplate = new templateWelcome().getBaseTemplate();
+            welcomeRoute.createRoute("welcome",welcomeFunction,welcomeTemplate);
+            this.router.addRoute(welcomeRoute);
+            
 
             //socket
             this.router.linkSocket(this.socket);
