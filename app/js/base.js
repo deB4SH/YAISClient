@@ -28,20 +28,20 @@ function Base(){
             
             var loginRoute = new Route();
             var loginFunction = function(){};
-            var loginTemplate = new templateLogin().getBaseTemplate();
+            var loginTemplate = new templateLogin();
             loginRoute.createRoute("login",loginFunction,loginTemplate);
             this.router.addRoute(loginRoute);
             
             var welcomeRoute = new Route();
             var welcomeFunction = function(){};
-            var welcomeTemplate = new templateWelcome().getBaseTemplate();
+            var welcomeTemplate = new templateWelcome();
             welcomeRoute.createRoute("welcome",welcomeFunction,welcomeTemplate);
             this.router.addRoute(welcomeRoute);
             
             
             var roomRoute = new Route();
             var roomFunction = function(){};
-            var roomTemplate = new templateRoom().getBaseTemplate();
+            var roomTemplate = new templateRoom();
 
             //socket
             this.router.linkSocket(this.socket);

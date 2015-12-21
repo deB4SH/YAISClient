@@ -2,7 +2,6 @@ function MessageParser(){
     
     var messagePool = new Array();
     
-    
     this.addMessage = function(message){
         messagePool.push(message);
     }

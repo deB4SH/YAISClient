@@ -6,7 +6,7 @@ function templateWelcome(){
                         WELCOME TO YAIS CLIENT\n\
                         ";
     
-    this.getBaseTemplate = function(){
+    this.getTemplate = function(handleReq){
         return baseTemplate;
     }
 }

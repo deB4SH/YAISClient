@@ -3,7 +3,7 @@ function modelRoom(){
     var id = "";
     var location = "";
     var mustacheObject = null;
-    var template =  new templateRoom().getBaseTemplate();
+    var template =  new templateModelRoom();
     
     
     this.createRoom = function(handleid,handlelocation){
@@ -16,10 +16,15 @@ function modelRoom(){
         };
     }
     
-    this.renderTempalte = function(){
-        var render = Mustache.render(template, mustacheObject);
+    this.renderTempalte = function(handle){
+        var render = Mustache.render(template.getBaseTemplate(handle), mustacheObject);
+        return render;
     }
     
+    
+    this.getLocation = function(){
+        return location;
+    }
     
     
     

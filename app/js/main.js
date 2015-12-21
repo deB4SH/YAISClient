@@ -3,6 +3,8 @@
  */
 var baseutils = new Base();
 var config = new Config();
+var sStorage = new SStorage();
+var lStorage = new LStorage();
 
 /**
  * Web functions
@@ -37,6 +39,7 @@ baseutils.setup();
 
 router.navigate("");
 router.navigate("welcome");
+router.loadCurrent();
 
 window.setInterval(router.listen,1000);
 window.setInterval(socket.backgroundWorker, 1000);

@@ -6,7 +6,7 @@ function templateLogin(){
                         <button onclick='myFunction()'>Login me</button> \n\
                         ";
     
-    this.getBaseTemplate = function(){
+    this.getTemplate = function(handleReq){
         return baseTemplate;
     }
 }

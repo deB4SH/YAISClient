@@ -33,7 +33,7 @@ function Route(){
 	 */
 	this.renderTemplate = function(data){
             var render = Mustache.render(this.template, data);
-            console.log(render);
+            //console.log(render);
             return render;
             
 	}
@@ -45,7 +45,6 @@ function Route(){
 		var anchor = document.getElementById("main-text");
 		var span = document.createElement("span");
                 span.id = "main-text";
-                console.log(span);
 		span.innerHTML = this.renderTemplate(data);
 		anchor.parentNode.replaceChild(span,anchor);
 	}

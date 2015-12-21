@@ -7,15 +7,18 @@
  */
 function Router(){
 	
+        //private
 	var currentPage = null;
 	var routes = null;
 	var root = "/";
 	var limiter = "#";
 	var mode = null;
 	var socket = null;
-	var regex = /(#[A-Z]*)\w+/g;
         var lastPage = null;
-	
+	var self = this;
+        //public
+        this.subregex = new RegExp(/(_[A-Z]*)\w+/g);
+        
 	
 	this.createRouter = function(handleHistory){
 		routes = [];
@@ -61,19 +64,28 @@ function Router(){
             }
 	}
 	
+        this.loadCurrent = function(){
+            var currentCall = window.location.hash.replace("#","")
+            for(var i = 0; i < routes.length; i++){
+                if(routes[i].getName() == currentCall){
+                    routes[i].behavior();
+                    routes[i].updateWeb();
+                }
+            }
+        }
 	
 	/*
 	 * Job Functions
 	 */
 	this.listen = function(){	
-            var currentPage = window.location.href + "";
+            var currentPage = window.location.hash + "";
             if(lastPage !== currentPage){
-                    var currentCall = regex.exec(currentPage)[0].replace("#","");
-                    console.log(currentCall);
+                console.log(currentPage);
+                    var currentCall = currentPage.replace("#","");
                     for(var i = 0; i < routes.length; i++){
                             if(routes[i].getName() == currentCall){
                                     //change lastPage
-                                    lastPage = window.location.href + "";
+                                    lastPage = window.location.hash + "";
                                     //TODO: requesting new data from socket (if exists)
 
                                     //TODO: process data
