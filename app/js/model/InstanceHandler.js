@@ -12,6 +12,18 @@ function InstanceHandler(){
         roomStorage.push(handleRoom);
     }
     
+    this.getAllRoom = function(){
+        return roomStorage;
+    }
+    
+    this.getRoom = function(handleRoomName){
+        for(var i=0; i < roomStorage.length; i++){
+            if(handleRoomName == roomStorage[i].getLocation()){
+                return roomStorage[i];
+            }
+        }
+    }
+    
     this.delRoom = function(handleRoomName){
         var index = -1;
         //find index
@@ -20,6 +32,7 @@ function InstanceHandler(){
                 index = i;
             }
         }
+        var dump = roomStorage.splice(index,1);
     }
     
 }
