@@ -15,7 +15,10 @@ function Router(){
 	var mode = null;
 	var socket = null;
         var lastPage = null;
+        var lastAction = null;
 	var self = this;
+        var instanceHandler = null;
+        var openTicketID = null;
         //public
         this.subregex = new RegExp(/(_[A-Z]*)\w+/g);
         
@@ -26,8 +29,14 @@ function Router(){
 		root = window.location.href;
 		currentPage = root;
 		lastPage = root;
+                lastAction = null;
+                openTicketID = null;
 	}
 	
+        this.linkInstanceHandler = function(handleIH){
+            instanceHandler = handleIH;
+        }
+        
 	this.linkSocket = function(handlesocket){
             socket = handlesocket;
 	}
@@ -44,13 +53,27 @@ function Router(){
             }
 	}
 	
-	this.navigate = function(handlePath){
+	this.navigate = function(handleReqPath){
+            var handlePath = "";
+            var subAction = "empty";
+            if(handleReqPath.indexOf("$")){
+                handlePath = handleReqPath.split("$")[0];
+                subAction = handleReqPath.split("$")[1];
+            }
+            else{
+                handlePath = handleReqPath;
+            }
             if(handlePath != ""){
                     root = root.split("#")[0];
                     var found = false;
                     for(var i = 0; i < routes.length; i++){
                             if(routes[i].getName() == handlePath){
-                                    history.pushState({},document.title, root + limiter + handlePath);
+                                    if(subAction == "empty" || typeof subAction == 'undefined'){
+                                        history.pushState({},document.title, root + limiter + handlePath);
+                                    }
+                                    else{
+                                        history.pushState({},document.title, root + limiter + handlePath + "$" + subAction);
+                                    }
                                     currentPage = window.location.href;
                                     found = true;
                             }
@@ -78,25 +101,36 @@ function Router(){
 	 * Job Functions
 	 */
 	this.listen = function(){	
-            var currentPage = window.location.hash + "";
-            if(lastPage !== currentPage){
-                console.log(currentPage);
+            var currentPage = "";
+            var subAction = "";
+            if(window.location.hash.indexOf("$")){
+                currentPage = window.location.hash.split("$")[0];
+                subAction = window.location.hash.split("$")[1];
+            }
+            else{
+                currentPage = window.location.hash;
+            }
+            if(lastPage !== currentPage || lastAction !== subAction){
                     var currentCall = currentPage.replace("#","");
                     for(var i = 0; i < routes.length; i++){
                             if(routes[i].getName() == currentCall){
                                     //change lastPage
-                                    lastPage = window.location.hash + "";
+                                    lastPage = currentPage;
+                                    lastAction = subAction;
                                     //TODO: requesting new data from socket (if exists)
-
+                                    instanceHandler.manageDataRquest(currentPage, subAction);
+                                    
                                     //TODO: process data
 
                                     //TODO: behavior on each page
-                                    routes[i].behavior();
+                                    routes[i].behavior(subAction);
 
                                     //TODO: render Outcome
-                                    routes[i].updateWeb();
+                                    routes[i].updateWeb(subAction, "");
+                                    console.log("updated");
                                     
-                                    
+                                    //run the post update
+                                    routes[i].runPostUpdateWeb();
                             }
                     }
             }

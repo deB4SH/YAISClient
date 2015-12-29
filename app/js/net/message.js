@@ -11,10 +11,7 @@ function Message(messageType, messageSubType, messageActionType, message){
 	this.message= message;
         this.messageID = this.generateMessageID();
 	
-        
-        
 	this.buildRequest = function(){
-		
 		var requestObj = new Object();
 		requestObj.messageType = this.messageType;
 		requestObj.messageSubType = this.messageSubType;
@@ -23,8 +20,6 @@ function Message(messageType, messageSubType, messageActionType, message){
 		requestObj.message = this.message;
 		
 		var request = JSON.stringify(requestObj);
-						
-		console.log(request);
 		return request;
 	}
 	

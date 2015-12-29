@@ -21,6 +21,11 @@ var messageActionType = new MessageActionType();
 var messageParser = new MessageParser();
 
 /**
+ * Instancing and Data
+ */
+var instanceHandler = new InstanceHandler();
+
+/**
  * Testing (del for release)
  */
 var testUC= new userCreation(socket, messageType, messageSubType);
@@ -30,10 +35,12 @@ socket.init("ws://" + config.getwsAdress() + ":" + config.getwsPort(), messagePa
 //socket.sendMessage("testing 723");	
 //socket.sendMessage(message.buildRequest());
 	
-testUC.createTestUser();
-testAllRoomData.getAllRoomData();
+//testUC.createTestUser();
+//testAllRoomData.getAllRoomData();
 	
 router.createRouter("history");
+instanceHandler.linkSocket(socket);
+router.linkInstanceHandler(instanceHandler);
 baseutils.createBase(router, socket);
 baseutils.setup();
 

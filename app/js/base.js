@@ -29,19 +29,28 @@ function Base(){
             var loginRoute = new Route();
             var loginFunction = function(){};
             var loginTemplate = new templateLogin();
-            loginRoute.createRoute("login",loginFunction,loginTemplate);
+            var loginPostUpdate = function(){};
+            loginRoute.createRoute("login",loginFunction,loginTemplate,loginPostUpdate);
             this.router.addRoute(loginRoute);
             
             var welcomeRoute = new Route();
             var welcomeFunction = function(){};
             var welcomeTemplate = new templateWelcome();
-            welcomeRoute.createRoute("welcome",welcomeFunction,welcomeTemplate);
+            var welcomePostUpdate = function(){};
+            welcomeRoute.createRoute("welcome",welcomeFunction,welcomeTemplate,welcomePostUpdate);
             this.router.addRoute(welcomeRoute);
             
             
             var roomRoute = new Route();
-            var roomFunction = function(){};
+            var roomFunction = function(){ };
             var roomTemplate = new templateRoom();
+            var roomPostUpdate = function(){
+                 document.getElementById("btnRoomNew").onclick = room_NewRoom;
+                 document.getElementById("btnRoomAll").onclick = room_AllRoom;
+                 document.getElementById("btnRoomRem").onclick = room_RemRoom;
+            };
+            roomRoute.createRoute("room",roomFunction,roomTemplate,roomPostUpdate);
+            this.router.addRoute(roomRoute);
 
             //socket
             this.router.linkSocket(this.socket);

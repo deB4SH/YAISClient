@@ -1,15 +1,27 @@
 
 function templateRoom(){
-    
-    var baseTemplate = "HOME>ROOM<br/>\n\
-                        \n\
-                        btn NEW ROOM , btnGET ALL ROOMS, btnREMOVE ONE ROOM\n\
+    var baseTemplate = "\n\
+                        <button type='button' id='btnRoomNew'>New Room</button> \n\
+                        <button type='button' id='btnRoomAll'>Display all Rooms</button> \n\
+                        <button type='button' id='btnRoomRem'>Remove Room</button>\n\
                         <br\>\n\
                         <br\>\n\
-                        {{content}\n\
+                        DATA HEREs\n\
                         ";
     
-    this.getBaseTemplate = function(){
+    this.getTemplate = function(){
         return baseTemplate;
     }
+}
+
+function room_NewRoom(){
+    router.navigate("room$new");
+}
+
+function room_AllRoom(){
+    router.navigate("room$all");
+}
+
+function room_RemRoom(){
+    router.navigate("room$remove");
 }

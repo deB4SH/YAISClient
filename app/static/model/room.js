@@ -30,7 +30,7 @@ function templateModelRoom(){
                         </div>\n\
                         </div>";
     
-    this.getBaseTemplate = function(state){
+    this.getTemplate = function(state){
         if(state == "remove")
         {
             return delTemplate;
@@ -42,7 +42,7 @@ function templateModelRoom(){
             return listTemplate;
         }
         else{
-            return "error";
+            return listTemplate;
         }
     }
     

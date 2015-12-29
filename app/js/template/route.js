@@ -8,12 +8,14 @@ function Route(){
 	this.name = "";
 	this.behavior = function(){};
 	this.template = "";
+        this.postUpdateWeb = function(){};
         
 	
-	this.createRoute = function(name, behavior, template){
+	this.createRoute = function(name, behavior, template, postUpdate){
 		this.name = name;
 		this.behavior = behavior;
 		this.template = template;
+                this.postUpdateWeb = postUpdate;
 	}
 	
 	this.getName = function(){
@@ -23,16 +25,20 @@ function Route(){
 	this.getBehavior = function(){
 		return this.bahavior;
 	}
+        
+        this.runPostUpdateWeb = function(){
+            this.postUpdateWeb();
+        }
 	
-	this.getBaseTempalte = function(){
-		return this.template.getBaseTemplate();
+	this.getBaseTempalte = function(state){
+		return this.template.getTemplate(state);
 	}
 	
 	/**
 	 * handleDataset is an array of templatedata
 	 */
-	this.renderTemplate = function(data){
-            var render = Mustache.render(this.template, data);
+	this.renderTemplate = function(state, data){
+            var render = Mustache.render(this.getBaseTempalte(state), data);
             //console.log(render);
             return render;
             
@@ -41,11 +47,12 @@ function Route(){
 	/**
 	 * change contents on webpage
 	 */
-	this.updateWeb = function(data){
+	this.updateWeb = function(state, data){
 		var anchor = document.getElementById("main-text");
 		var span = document.createElement("span");
                 span.id = "main-text";
-		span.innerHTML = this.renderTemplate(data);
+		span.innerHTML = this.renderTemplate(state, data);
 		anchor.parentNode.replaceChild(span,anchor);
 	}
+
 }
