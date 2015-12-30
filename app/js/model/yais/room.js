@@ -26,7 +26,9 @@ function modelRoom(){
         return location;
     }
     
-    
+    this.getID = function(){
+        return id;
+    }
     
     
 }

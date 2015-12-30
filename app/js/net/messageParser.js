@@ -12,7 +12,7 @@ function MessageParser(){
      */
     
     this.linkInstanceHandler = function(handleInstanceHandler){
-        this.instanceHandler = handleInstanceHandler;
+        instanceHandler = handleInstanceHandler;
     }
     
     this.addMessage = function(message){
@@ -28,10 +28,10 @@ function MessageParser(){
         
         //insert into instancehandler
         if(messagePool.length > 0){
-            
             var current = JSON.parse(messagePool.pop());
-            console.log(current);
+            var dbO = JSON.parse(current.response);
             
+            instanceHandler.handleIncommingDataRequest(dbO.classType,current.messageID,dbO);
         }
     }
     

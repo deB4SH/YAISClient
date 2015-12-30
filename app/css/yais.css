@@ -13,8 +13,7 @@ body{
 .logo{
 	height: 125px;
 	width: 100%;
-	
-	margin-top: 25px;
+	margin-top: 10px;
 }
 
 .content-box{
@@ -32,6 +31,16 @@ body{
 	border-bottom-color: #2F2E2D;
 }
 
+#main-col-box{
+    padding-left: 0px;
+}
+
 #main-content{
 	padding-top: 10px;
+}
+
+.btnRootExtend{
+    height: 24px;
+    font-size: 10px;
+    padding-top: 1px;
 }

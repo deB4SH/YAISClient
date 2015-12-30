@@ -110,30 +110,28 @@ function Router(){
             else{
                 currentPage = window.location.hash;
             }
-            if(lastPage !== currentPage || lastAction !== subAction){
+            if(lastPage !== currentPage || lastAction !== subAction || instanceHandler.getOpenTicketState()){
                     var currentCall = currentPage.replace("#","");
                     for(var i = 0; i < routes.length; i++){
                             if(routes[i].getName() == currentCall){
                                     //change lastPage
                                     lastPage = currentPage;
                                     lastAction = subAction;
-                                    //TODO: requesting new data from socket (if exists)
-                                    instanceHandler.manageDataRquest(currentPage, subAction);
-                                    
-                                    //TODO: process data
-
-                                    //TODO: behavior on each page
+                                    //request new data AND dont request new data if is requested
+                                    if(!instanceHandler.getOpenTicketState()){
+                                        instanceHandler.manageDataRquest(currentPage, subAction);
+                                    }
+                                    //base behavior (alerts, pre render stuff
                                     routes[i].behavior(subAction);
-
-                                    //TODO: render Outcome
-                                    routes[i].updateWeb(subAction, "");
-                                    console.log("updated");
+                                    //render webpage
                                     
+                                    routes[i].updateWeb(subAction, "");
                                     //run the post update
                                     routes[i].runPostUpdateWeb();
                             }
                     }
             }
+            
 	}
 	
 }

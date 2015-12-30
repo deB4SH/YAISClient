@@ -26,6 +26,20 @@ var messageParser = new MessageParser();
 var instanceHandler = new InstanceHandler();
 
 /**
+ * Template Basic calls
+ */
+function btnRoot_start(){
+    router.navigate("welcome");
+}
+document.getElementById("btnRootStart").onclick = btnRoot_start;
+
+function btnRoot_room(){
+    router.navigate("room");
+}
+document.getElementById("btnRootRoom").onclick = btnRoot_room;
+
+
+/**
  * Testing (del for release)
  */
 var testUC= new userCreation(socket, messageType, messageSubType);
@@ -41,6 +55,7 @@ socket.init("ws://" + config.getwsAdress() + ":" + config.getwsPort(), messagePa
 router.createRouter("history");
 instanceHandler.linkSocket(socket);
 router.linkInstanceHandler(instanceHandler);
+messageParser.linkInstanceHandler(instanceHandler);
 baseutils.createBase(router, socket);
 baseutils.setup();
 

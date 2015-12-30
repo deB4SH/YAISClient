@@ -26,5 +26,9 @@ function Message(messageType, messageSubType, messageActionType, message){
 	this.restoreFromJson = function(handleJson){
 		
 	}
+        
+        this.getMessageID = function(){
+            return this.messageID;
+        }
 	
 }
