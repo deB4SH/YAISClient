@@ -7,35 +7,35 @@
  */
 function Router(){
 	
-        //private
-	var currentPage = null;
-	var routes = null;
-	var root = "/";
-	var limiter = "#";
-	var mode = null;
-	var socket = null;
-        var lastPage = null;
-        var lastAction = null;
-	var self = this;
-        var instanceHandler = null;
-        var openTicketID = null;
-        //public
-        this.subregex = new RegExp(/(_[A-Z]*)\w+/g);
+    //private
+    var currentPage = null;
+    var routes = null;
+    var root = "/";
+    var limiter = "#";
+    var mode = null;
+    var socket = null;
+    var lastPage = null;
+    var lastAction = null;
+    var self = this;
+    var instanceHandler = null;
+    var socketPromise = null;
+    //public
+    this.subregex = new RegExp(/(_[A-Z]*)\w+/g);
         
 	
 	this.createRouter = function(handleHistory){
-		routes = [];
-		mode = handleHistory;
-		root = window.location.href;
-		currentPage = root;
-		lastPage = root;
-                lastAction = null;
-                openTicketID = null;
+            routes = [];
+            mode = handleHistory;
+            root = window.location.href;
+            currentPage = root;
+            lastPage = root;
+            lastAction = null;
+            socketPromise = new socketPromise();
 	}
 	
-        this.linkInstanceHandler = function(handleIH){
-            instanceHandler = handleIH;
-        }
+    this.linkInstanceHandler = function(handleIH){
+        instanceHandler = handleIH;
+    }
         
 	this.linkSocket = function(handlesocket){
             socket = handlesocket;
@@ -110,7 +110,7 @@ function Router(){
             else{
                 currentPage = window.location.hash;
             }
-            if(lastPage !== currentPage || lastAction !== subAction || instanceHandler.getOpenTicketState()){
+            if(lastPage !== currentPage || lastAction !== subAction || socketPromise.isPromiseInProgress() == false){
                     var currentCall = currentPage.replace("#","");
                     for(var i = 0; i < routes.length; i++){
                             if(routes[i].getName() == currentCall){
@@ -130,6 +130,11 @@ function Router(){
                                     routes[i].runPostUpdateWeb();
                             }
                     }
+            }
+            else if(socketPromise.isPromiseInProgress() && lastPage == currentPage && lastAction == subAction){
+                //do updates until promise is fullfileld
+                
+                //render list of unfullfilled 
             }
             
 	}

@@ -7,11 +7,15 @@ function InstanceHandler(){
     var cabinetRowStorage = new Array();
     var dossierStorage = new Array();
     var socket = null;
-    var openticketID = 0;
+    var socketPromise = null;
     
     //public
     this.linkSocket = function(handleSocket){
         socket = handleSocket;
+    }
+    
+    this.linkSocketPromise = function(handleSocketPromise){
+        socketPromise = handleSocketPromise;
     }
     
     this.addRoom = function(handleRoom){
@@ -61,21 +65,12 @@ function InstanceHandler(){
             }
             if(action == "all"){
                 message = new Message(messageType.getDataCode(), messageSubType.getDataRoom(), messageActionType.loadAction(),"");
-                openticketID = message.getMessageID();
+                socketPromise.addNewOpenID(message.getMessageID());
                 socket.sendMessage(message.buildRequest());
             }
             if(action == "remove"){
                 
             }
-        }
-    }
-    
-    this.getOpenTicketState = function(){
-        if(openticketID == 0){
-            return false;
-        }
-        else{
-            return true;
         }
     }
     
