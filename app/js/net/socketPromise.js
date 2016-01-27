@@ -41,8 +41,8 @@ function socketPromise(){
         }
         
         if(checkCounter == openIDList.length){
-            return true;
             clearList();
+            return true;
         }
         else{
             return false;

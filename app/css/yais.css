@@ -44,3 +44,11 @@ body{
     font-size: 10px;
     padding-top: 1px;
 }
+
+#headleft{
+    float: left;
+}
+
+#headright{
+    float: right;
+}

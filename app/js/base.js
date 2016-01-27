@@ -52,6 +52,14 @@ function Base(){
             roomRoute.createRoute("room",roomFunction,roomTemplate,roomPostUpdate);
             this.router.addRoute(roomRoute);
 
+            var loginRoute = new Route();
+            var loginFunction = function(){ };
+            var loginTemplate = new templateLogin();
+            var loginPostUpdate = function(){ };
+            loginRoute.createRoute("login",loginFunction,loginTemplate,loginPostUpdate);
+            this.router.addRoute(loginRoute);
+
+
             //socket
             this.router.linkSocket(this.socket);
 		

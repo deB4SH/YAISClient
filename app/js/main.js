@@ -14,6 +14,7 @@ var router = new Router();
 /**
  * Socketing and Messages
  */
+var socketPromise = new socketPromise();
 var socket = new Socket();
 var messageType = new MessageType();
 var messageSubType = new MessageSubType();
@@ -38,6 +39,11 @@ function btnRoot_room(){
 }
 document.getElementById("btnRootRoom").onclick = btnRoot_room;
 
+function btnRoot_login(){
+    router.navigate("login");
+}
+document.getElementById("btnRootLogin").onclick = btnRoot_login;
+
 
 /**
  * Testing (del for release)
@@ -50,11 +56,12 @@ socket.init("ws://" + config.getwsAdress() + ":" + config.getwsPort(), messagePa
 //socket.sendMessage(message.buildRequest());
 	
 //testUC.createTestUser();
-//testAllRoomData.getAllRoomData();
+testAllRoomData.getAllRoomData();
 	
 router.createRouter("history");
 instanceHandler.linkSocket(socket);
 router.linkInstanceHandler(instanceHandler);
+router.linkSocketPromise(socketPromise)
 messageParser.linkInstanceHandler(instanceHandler);
 baseutils.createBase(router, socket);
 baseutils.setup();

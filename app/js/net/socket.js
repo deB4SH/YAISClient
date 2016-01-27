@@ -15,7 +15,7 @@ function Socket(){
 	*/
 	var _onOpen = function(event){
             console.log("[SOCKET]:[CONNECTED TO WS]");
-            self.sendMessage("HEY");
+            //self.sendMessage("HEY");
 	}
 	
 	var _onClose = function(event){

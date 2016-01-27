@@ -77,9 +77,12 @@ function InstanceHandler(){
     this.handleIncommingDataRequest = function(handleClassType, messageID ,data){
         if(handleClassType == "room"){
             console.log("got new room data");
+            console.log(data);
             if(openticketID == messageID){
                 //id equal with open ticket and now setting it back to done
                 openticketID = 0;
+                
+                
                 
                 if(handleClassType == "room"){
                     for(var key in data){

@@ -30,12 +30,15 @@ function Router(){
             currentPage = root;
             lastPage = root;
             lastAction = null;
-            socketPromise = new socketPromise();
 	}
 	
-    this.linkInstanceHandler = function(handleIH){
-        instanceHandler = handleIH;
-    }
+        this.linkInstanceHandler = function(handleIH){
+            instanceHandler = handleIH;
+        }
+        
+        this.linkSocketPromise = function(handlePromise){
+            socketPromise = handlePromise;
+        }
         
 	this.linkSocket = function(handlesocket){
             socket = handlesocket;
@@ -110,7 +113,9 @@ function Router(){
             else{
                 currentPage = window.location.hash;
             }
-            if(lastPage !== currentPage || lastAction !== subAction || socketPromise.isPromiseInProgress() == false){
+            
+            
+            if(lastPage !== currentPage && socketPromise.isPromiseInProgress() === false || lastAction !== subAction && socketPromise.isPromiseInProgress() === false){
                     var currentCall = currentPage.replace("#","");
                     for(var i = 0; i < routes.length; i++){
                             if(routes[i].getName() == currentCall){
@@ -118,9 +123,7 @@ function Router(){
                                     lastPage = currentPage;
                                     lastAction = subAction;
                                     //request new data AND dont request new data if is requested
-                                    if(!instanceHandler.getOpenTicketState()){
-                                        instanceHandler.manageDataRquest(currentPage, subAction);
-                                    }
+                                    
                                     //base behavior (alerts, pre render stuff
                                     routes[i].behavior(subAction);
                                     //render webpage
@@ -133,7 +136,7 @@ function Router(){
             }
             else if(socketPromise.isPromiseInProgress() && lastPage == currentPage && lastAction == subAction){
                 //do updates until promise is fullfileld
-                
+                console.log("else if");
                 //render list of unfullfilled 
             }
             
