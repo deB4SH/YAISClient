@@ -5,6 +5,7 @@ var baseutils = new Base();
 var config = new Config();
 var sStorage = new SStorage();
 var lStorage = new LStorage();
+var user = new mdlUser();
 
 /**
  * Web functions
@@ -25,25 +26,6 @@ var messageParser = new MessageParser();
  * Instancing and Data
  */
 var instanceHandler = new InstanceHandler();
-
-/**
- * Template Basic calls
- */
-function btnRoot_start(){
-    router.navigate("welcome");
-}
-document.getElementById("btnRootStart").onclick = btnRoot_start;
-
-function btnRoot_room(){
-    router.navigate("room");
-}
-document.getElementById("btnRootRoom").onclick = btnRoot_room;
-
-function btnRoot_login(){
-    router.navigate("login");
-}
-document.getElementById("btnRootLogin").onclick = btnRoot_login;
-
 
 /**
  * Testing (del for release)
@@ -69,6 +51,10 @@ baseutils.setup();
 router.navigate("");
 router.navigate("welcome");
 router.loadCurrent();
+
+user.initAnon();
+user.linkSocket(socket);
+
 
 window.setInterval(router.listen,1000);
 window.setInterval(socket.backgroundWorker, 1000);

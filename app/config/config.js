@@ -1,4 +1,3 @@
-
 function Config(){
 	
 	this.wsAdress = "127.0.0.1";

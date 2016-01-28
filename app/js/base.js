@@ -59,6 +59,12 @@ function Base(){
             loginRoute.createRoute("login",loginFunction,loginTemplate,loginPostUpdate);
             this.router.addRoute(loginRoute);
 
+            var registerRoute = new Route();
+            var registerFunction = function (){ };
+            var registerTemplate = new templateRegister();
+            var registerPostUpdate = function () { };
+            registerRoute.createRoute("register",registerFunction,registerTemplate,registerPostUpdate);
+            this.router.addRoute(registerRoute);
 
             //socket
             this.router.linkSocket(this.socket);

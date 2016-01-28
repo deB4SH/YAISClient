@@ -24,7 +24,7 @@ function Socket(){
 	
         var _onMessage = function(event){
             messageParser.addMessage(event.data);
-            //console.log(event.data);
+            console.log(event.data);
         }
 	
 	/**
