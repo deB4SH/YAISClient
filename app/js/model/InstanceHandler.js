@@ -16,6 +16,7 @@ function InstanceHandler(){
     
     this.linkSocketPromise = function(handleSocketPromise){
         socketPromise = handleSocketPromise;
+        socketPromise.clearList();
     }
     
     this.addRoom = function(handleRoom){
@@ -57,6 +58,25 @@ function InstanceHandler(){
         var dump = roomStorage.splice(index,1);
     }
     
+    this.getAllDossier = function(){
+        return dossierStorage;
+    }
+    
+    this.getDossierByID = function(handleDossierID){
+        return dossierStorage[handleDossierID];
+    }
+    
+    this.getDossierByName = function(handleDossierName){
+        for(var i = 0; i < dossierStorage.length; i++){
+            if(dossierStorage[i].getName() == handleDossierName){
+                return dossierStorage[i];
+            }
+        }
+    }
+    
+    this.addDossier = function(handleDossier){
+        dossierStorage.push(handleDossier);
+    }
     this.manageDataRquest = function(handleClassType, action){
         var classType = handleClassType.replace("#","");
         if(classType == "room"){
@@ -75,26 +95,43 @@ function InstanceHandler(){
     }
     
     this.handleIncommingDataRequest = function(handleClassType, messageID ,data){
+        //add messageID to socketPromise (check if answer for request is there)
+        socketPromise.addReceivedID(messageID);
+        
+        //check if classtype is room
         if(handleClassType == "room"){
             console.log("got new room data");
             console.log(data);
-            if(openticketID == messageID){
-                //id equal with open ticket and now setting it back to done
-                openticketID = 0;
-                
-                
-                
-                if(handleClassType == "room"){
-                    for(var key in data){
-                        if(key.search(/([0-9])+/) != -1){
-                            var obj = JSON.parse(data[key]);
-                            var model = new modelRoom();
-                            model.createRoom(obj.id,obj.location);
-                            this.addRoom(model);
-                        }
-                    }
+            for(var key in data){
+                if(key.search(/([0-9])+/) != -1){
+                    var obj = JSON.parse(data[key]);
+                    var model = new modelRoom();
+                    model.createRoom(obj.id,obj.location);
+                    this.addRoom(model);
                 }
             }
-        }   
+        }
+           
+        //check if classtype is dossier
+        else if(handleClassType == "dossier"){
+            console.log("recieved new dossier data");
+            
+            for(var key in data){
+                if(key.search(/([0-9])+/) != -1){
+                    var obj = JSON.parse(data[key]);
+                    var mdl = new modelDossier();
+                    mdl.createDossier(obj.id,obj.name,obj.archive,obj.use,obj.created);
+                    this.add
+                }
+            }
+        }
+        //check if classtype is cabinet
+        else if(handleClassType == "cabinet"){
+            
+        }
+        //check if classtype is cabinetrow
+        else if(handleClassType == "cabinetrow"){
+            
+        }
     }
 }

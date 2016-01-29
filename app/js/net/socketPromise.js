@@ -21,6 +21,10 @@ function socketPromise(){
         openIDList.push(handleID);
     }
     
+    this.addReceivedID = function(handleID){
+        closedIDList.push(handleID);
+    }
+    
     this.isPromiseInProgress = function(){
         if(openIDList.length > 0){
             return true;
