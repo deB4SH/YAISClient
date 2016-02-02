@@ -23,130 +23,145 @@ function Router(){
     this.subregex = new RegExp(/(_[A-Z]*)\w+/g);
         
 	
-	this.createRouter = function(handleHistory){
-            routes = [];
-            mode = handleHistory;
-            root = window.location.href;
-            currentPage = root;
-            lastPage = root;
-            lastAction = null;
-	}
-	
-        this.linkInstanceHandler = function(handleIH){
-            instanceHandler = handleIH;
+    this.createRouter = function(handleHistory){
+        routes = [];
+        mode = handleHistory;
+        root = window.location.href;
+        currentPage = root;
+        lastPage = root;
+        lastAction = null;
+    }
+
+    this.linkInstanceHandler = function(handleIH){
+        instanceHandler = handleIH;
+    }
+
+    this.linkSocketPromise = function(handlePromise){
+        socketPromise = handlePromise;
+    }
+
+    this.linkSocket = function(handlesocket){
+        socket = handlesocket;
+    }
+
+    this.addRoute = function(handleRoute){
+        routes.push(handleRoute);
+    }
+
+    this.removeRoute = function(handleName){
+        for(var i = 0; i < routes.length; i++){
+                if(routes[i].getName() === handleName){
+                        routes.splice(i,1);
+                }
         }
-        
-        this.linkSocketPromise = function(handlePromise){
-            socketPromise = handlePromise;
+    }
+
+    this.navigate = function(handleReqPath){
+        var handlePath = "";
+        var subAction = "empty";
+        if(handleReqPath.indexOf("$")){
+            handlePath = handleReqPath.split("$")[0];
+            subAction = handleReqPath.split("$")[1];
         }
-        
-	this.linkSocket = function(handlesocket){
-            socket = handlesocket;
-	}
-	
-	this.addRoute = function(handleRoute){
-            routes.push(handleRoute);
-	}
-	
-	this.removeRoute = function(handleName){
-            for(var i = 0; i < routes.length; i++){
-                    if(routes[i].getName() === handleName){
-                            routes.splice(i,1);
-                    }
+        else{
+            handlePath = handleReqPath;
+        }
+        if(handlePath != ""){
+                root = root.split("#")[0];
+                var found = false;
+                for(var i = 0; i < routes.length; i++){
+                        if(routes[i].getName() == handlePath){
+                                if(subAction == "empty" || typeof subAction == 'undefined'){
+                                    history.pushState({},document.title, root + limiter + handlePath);
+                                }
+                                else{
+                                    history.pushState({},document.title, root + limiter + handlePath + "$" + subAction);
+                                }
+                                currentPage = window.location.href;
+                                found = true;
+                        }
+                }
+                if(!found){
+                        console.log("ERROR: CANNOT FIND PAGE - ERROR ON REQ.-PATH: " + handlePath);
+                }
+        }
+        else{
+                history.pushState({},document.title,root);
+        }
+    }
+
+    this.loadCurrent = function(){
+        var currentCall = window.location.hash.replace("#","")
+        for(var i = 0; i < routes.length; i++){
+            if(routes[i].getName() == currentCall){
+                routes[i].behavior();
+                routes[i].updateWeb();
             }
-	}
-	
-	this.navigate = function(handleReqPath){
-            var handlePath = "";
-            var subAction = "empty";
-            if(handleReqPath.indexOf("$")){
-                handlePath = handleReqPath.split("$")[0];
-                subAction = handleReqPath.split("$")[1];
+        }
+    }
+
+    /*
+     * Job Functions
+     */
+    this.listen = function(){	
+        console.log("listen");
+        var currentPage = "";
+        var subAction = "";
+        if(window.location.hash.indexOf("$")){
+            currentPage = window.location.hash.split("$")[0];
+            subAction = window.location.hash.split("$")[1];
+        }
+        else{
+            currentPage = window.location.hash;
+        }
+
+
+        if(lastPage !== currentPage && socketPromise.isPromiseInProgress() === false || lastAction !== subAction && socketPromise.isPromiseInProgress() === false){
+                var currentCall = currentPage.replace("#","");
+                for(var i = 0; i < routes.length; i++){
+                        if(routes[i].getName() == currentCall){
+                                //change lastPage
+                                lastPage = currentPage;
+                                lastAction = subAction;
+                                //request new data AND dont request new data if is requested
+
+                                //base behavior (alerts, pre render stuff
+                                routes[i].behavior(subAction);
+                                //render webpage
+
+                                routes[i].updateWeb(subAction, "");
+                                //run the post update
+                                routes[i].runPostUpdateWeb();
+                        }
+                }
+        }
+        else if(socketPromise.isPromiseInProgress() && lastPage == currentPage && lastAction == subAction){
+            //check if promise is fulfilled?
+            if(socketPromise.isPromiseFullfilled()){
+                //render requested website
+                for(var i = 0; i < routes.length; i++){
+                        if(routes[i].getName() == currentPage){
+                            routes[i].behavior(subAction);
+                                //render webpage
+                            routes[i].updateWeb(subAction, "");
+                                //run the post update
+                            routes[i].runPostUpdateWeb();
+                        }
+                    }
             }
             else{
-                handlePath = handleReqPath;
+                console.log("NOOO");
+                var waitingTemplate = new templateSocketPromise();
+                //display temp page for waiting purpose
+                var anchor = document.getElementById("main-text");
+		var span = document.createElement("span");
+                span.id = "main-text";
+		span.innerHTML = Mustache.render(waitingTemplate.getTemplate(), "");
+		anchor.parentNode.replaceChild(span,anchor);
             }
-            if(handlePath != ""){
-                    root = root.split("#")[0];
-                    var found = false;
-                    for(var i = 0; i < routes.length; i++){
-                            if(routes[i].getName() == handlePath){
-                                    if(subAction == "empty" || typeof subAction == 'undefined'){
-                                        history.pushState({},document.title, root + limiter + handlePath);
-                                    }
-                                    else{
-                                        history.pushState({},document.title, root + limiter + handlePath + "$" + subAction);
-                                    }
-                                    currentPage = window.location.href;
-                                    found = true;
-                            }
-                    }
-                    if(!found){
-                            console.log("ERROR: CANNOT FIND PAGE - ERROR ON REQ.-PATH: " + handlePath);
-                    }
-            }
-            else{
-                    history.pushState({},document.title,root);
-            }
-	}
-	
-        this.loadCurrent = function(){
-            var currentCall = window.location.hash.replace("#","")
-            for(var i = 0; i < routes.length; i++){
-                if(routes[i].getName() == currentCall){
-                    routes[i].behavior();
-                    routes[i].updateWeb();
-                }
-            }
+
         }
-	
-	/*
-	 * Job Functions
-	 */
-	this.listen = function(){	
-            var currentPage = "";
-            var subAction = "";
-            if(window.location.hash.indexOf("$")){
-                currentPage = window.location.hash.split("$")[0];
-                subAction = window.location.hash.split("$")[1];
-            }
-            else{
-                currentPage = window.location.hash;
-            }
-            
-            
-            if(lastPage !== currentPage && socketPromise.isPromiseInProgress() === false || lastAction !== subAction && socketPromise.isPromiseInProgress() === false){
-                    var currentCall = currentPage.replace("#","");
-                    for(var i = 0; i < routes.length; i++){
-                            if(routes[i].getName() == currentCall){
-                                    //change lastPage
-                                    lastPage = currentPage;
-                                    lastAction = subAction;
-                                    //request new data AND dont request new data if is requested
-                                    
-                                    //base behavior (alerts, pre render stuff
-                                    routes[i].behavior(subAction);
-                                    //render webpage
-                                    
-                                    routes[i].updateWeb(subAction, "");
-                                    //run the post update
-                                    routes[i].runPostUpdateWeb();
-                            }
-                    }
-            }
-            else if(socketPromise.isPromiseInProgress() && lastPage == currentPage && lastAction == subAction){
-                //check if promise is fulfilled?
-                if(socketPromise.isPromiseFullfilled()){
-                    //do some things
-                    console.log("yay");
-                }
-                else{
-                    //display temp page for waiting purpose
-                    console.log("noooo");
-                }
-                
-            }
-            
-	}
+
+    }
 	
 }
