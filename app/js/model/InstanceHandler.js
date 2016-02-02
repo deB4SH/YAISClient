@@ -6,6 +6,7 @@ function InstanceHandler(){
     var cabinetStorage = new Array();
     var cabinetRowStorage = new Array();
     var dossierStorage = new Array();
+    var user = new mdlUser();
     var socket = null;
     var socketPromise = null;
     
@@ -77,6 +78,23 @@ function InstanceHandler(){
     this.addDossier = function(handleDossier){
         dossierStorage.push(handleDossier);
     }
+    
+    this.sendLogin = function(){
+            //get login credentials and create userdata from it
+        var u = document.getElementById("inputUsername").value;
+        var p = document.getElementById("inputPassword").value;
+        user.newUser(u,p);
+        this.manageDataRquest("user","login");
+    }
+    
+    this.sendRegister = function(){
+        //get login credentials and create userdata from it
+        var u = document.getElementById("inputUsername").value;
+        var p = document.getElementById("inputPassword").value;
+        user.newUser(u,p);
+        this.manageDataRquest("user","register");
+    }
+    
     this.manageDataRquest = function(handleClassType, action){
         var classType = handleClassType.replace("#","");
         if(classType == "room"){
@@ -92,6 +110,28 @@ function InstanceHandler(){
                 
             }
         }
+        else if(classType == "user"){
+            var uMessageType = "";
+            var uMessageSubType = "";
+            if(action == "login"){
+                uMessageType = messageType.getUserCode();
+                uMessageSubType = messageSubType.getUserLogon();
+            }
+            if(action == "register"){
+                uMessageType = messageType.getUserCode(); 
+                uMessageSubType = messageSubType.getUserRegistration()
+            }
+            var message = new Message(uMessageType, uMessageSubType, "0", user.getJSON());
+            socketPromise.addNewOpenID(message.getMessageID());
+            var build = message.buildRequest();
+            console.log(build);
+            socket.sendMessage(message.buildRequest());  
+        }
+    }
+    
+    this.handleIncommingError = function(messageID, reason){
+        console.log("handle incomming error");
+        socketPromise.addReceivedID(messageID);
     }
     
     this.handleIncommingDataRequest = function(handleClassType, messageID ,data){

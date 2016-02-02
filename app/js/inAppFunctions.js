@@ -25,6 +25,23 @@ function btnRoot_register(){
 }
 document.getElementById("btnRootRegister").onclick = btnRoot_register;
 
+function btnRoom_all(){
+    instanceHandler.manageDataRquest("room","all");
+    room_AllRoom();
+}
+
+function room_NewRoom(){
+    router.navigate("room$new");
+}
+
+function room_AllRoom(){
+    router.navigate("room$all");
+}
+
+function room_RemRoom(){
+    router.navigate("room$remove");
+}
+
 
 /**
  *==========================================================================USER

@@ -135,9 +135,16 @@ function Router(){
                     }
             }
             else if(socketPromise.isPromiseInProgress() && lastPage == currentPage && lastAction == subAction){
-                //do updates until promise is fullfileld
-                console.log("else if");
-                //render list of unfullfilled 
+                //check if promise is fulfilled?
+                if(socketPromise.isPromiseFullfilled()){
+                    //do some things
+                    console.log("yay");
+                }
+                else{
+                    //display temp page for waiting purpose
+                    console.log("noooo");
+                }
+                
             }
             
 	}

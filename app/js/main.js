@@ -38,10 +38,11 @@ socket.init("ws://" + config.getwsAdress() + ":" + config.getwsPort(), messagePa
 //socket.sendMessage(message.buildRequest());
 	
 //testUC.createTestUser();
-testAllRoomData.getAllRoomData();
+//testAllRoomData.getAllRoomData();
 	
 router.createRouter("history");
 instanceHandler.linkSocket(socket);
+instanceHandler.linkSocketPromise(socketPromise);
 router.linkInstanceHandler(instanceHandler);
 router.linkSocketPromise(socketPromise)
 messageParser.linkInstanceHandler(instanceHandler);
@@ -56,6 +57,8 @@ user.initAnon();
 user.linkSocket(socket);
 
 
-window.setInterval(router.listen,1000);
-window.setInterval(socket.backgroundWorker, 1000);
-window.setInterval(messageParser.parseMessages, 500);
+
+var cronRouterListen = window.setInterval(router.listen,1000);
+var httpBackgroundWorker = window.setInterval(socket.backgroundWorker, 1000);
+var netMessageParser = window.setInterval(messageParser.parseMessages, 500);
+var netSocketPromise = null;

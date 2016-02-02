@@ -46,7 +46,7 @@ function Base(){
             var roomTemplate = new templateRoom();
             var roomPostUpdate = function(){
                  document.getElementById("btnRoomNew").onclick = room_NewRoom;
-                 document.getElementById("btnRoomAll").onclick = room_AllRoom;
+                 document.getElementById("btnRoomAll").onclick = btnRoom_all;
                  document.getElementById("btnRoomRem").onclick = room_RemRoom;
             };
             roomRoute.createRoute("room",roomFunction,roomTemplate,roomPostUpdate);

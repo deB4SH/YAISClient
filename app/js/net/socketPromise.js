@@ -14,7 +14,7 @@ function socketPromise(){
     
     this.clearList = function(){
         openIDList = new Array();
-        closedIDList = new Array();
+        //closedIDList = new Array();
     }
     
     this.addNewOpenID = function(handleID){
@@ -34,23 +34,44 @@ function socketPromise(){
         }
     }
     
+    /**
+     * Checks if the promise is fulfilled
+     * @returns {Boolean}
+     */
     this.isPromiseFullfilled = function(){
-        var checkCounter = 0;
-        for(var i=0; i < openIDList.length; i++){
-            for(var j=0; j < closedIDList.length; j++){
-                if(closedIDList[j] == openIDList[i]){
-                    checkCounter = checkCounter + 1;
+        if(openIDList.length > 0){
+            var checkCounter = 0;
+            for(var i=0; i < openIDList.length; i++){
+                for(var j=0; j < closedIDList.length; j++){
+                    if(closedIDList[j] == openIDList[i]){
+                        checkCounter = checkCounter + 1;
+                    }
                 }
             }
+            if(checkCounter == openIDList.length){
+                this.clearList();
+                return true;
+            }
+            else{
+                return false;
+            }
         }
-        
-        if(checkCounter == openIDList.length){
-            clearList();
-            return true;
+    }
+    
+    this.whichTicketIsOpen = function(){
+        var openTicketList = new Array();
+        for(var i=0; i < openIDList.length; i++){
+            var boolIsIn = false;
+            for(var j=0; j < closedIDList.length; j++){
+                if(openIDList[i] == closedIDList[j]){
+                    boolIsIn = true;
+                }
+            }
+            if(!boolIsIn){
+                openTicketList.push(openIDList[i]);
+            }
         }
-        else{
-            return false;
-        }
+        return openTicketList;
     }
     
 }

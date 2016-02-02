@@ -11,15 +11,3 @@ function templateRoom(){
         return baseTemplate;
     }
 }
-
-function room_NewRoom(){
-    router.navigate("room$new");
-}
-
-function room_AllRoom(){
-    router.navigate("room$all");
-}
-
-function room_RemRoom(){
-    router.navigate("room$remove");
-}

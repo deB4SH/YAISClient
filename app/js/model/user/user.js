@@ -35,36 +35,6 @@ function mdlUser(){
             return md5(password);
         }
         
-        this.sendLogin = function(){
-            //get login credentials and create userdata from it
-            var u = document.getElementById("inputUsername").value;
-            var p = document.getElementById("inputPassword").value;
-            this.newUser(u,p);
-            //send data to server
-            
-            var messageType = new MessageType();
-            var messageSubType = new MessageSubType();
-            var messageActionType = new MessageActionType();
-            
-            var message = new Message(messageType.getUserCode(), messageSubType.getUserLogon(), "", JSON.stringify(JSONobject));
-            socket.sendMessage(message.buildRequest());   
-        }
-        
-        this.sendRegister = function(){
-            //get login credentials and create userdata from it
-            var u = document.getElementById("inputUsername").value;
-            var p = document.getElementById("inputPassword").value;
-            this.newUser(u,p);
-            //send data to server
-            
-            var messageType = new MessageType();
-            var messageSubType = new MessageSubType();
-            var messageActionType = new MessageActionType();
-            
-            var message = new Message(messageType.getUserCode(), messageSubType.getUserRegistration(), "", JSON.stringify(JSONobject));
-            socket.sendMessage(message.buildRequest());   
-        }
-        
         this.isUserAnon = function(){
             if(username == "anonymous"){
                 return true;

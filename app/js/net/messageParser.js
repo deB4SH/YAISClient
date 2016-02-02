@@ -29,9 +29,21 @@ function MessageParser(){
         //insert into instancehandler
         if(messagePool.length > 0){
             var current = JSON.parse(messagePool.pop());
-            var dbO = JSON.parse(current.response);
             
-            instanceHandler.handleIncommingDataRequest(dbO.classType,current.messageID,dbO);
+            if(current.error){
+                console.log("error");
+                //console.log(current);
+                instanceHandler.handleIncommingError(current.messageID, current.error);
+            }
+            else if(current.response){
+                console.log("response");
+                console.log(current);
+                var dbO = JSON.parse(current.response);
+                instanceHandler.handleIncommingDataRequest(dbO.classType,current.messageID,dbO);
+            }
+            else{
+                console.log("something gone wrong here");
+            }
         }
     }
     
