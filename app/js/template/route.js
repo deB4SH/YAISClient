@@ -9,13 +9,15 @@ function Route(){
 	this.behavior = function(){};
 	this.template = "";
         this.postUpdateWeb = function(){};
+        this.aquireData = function(){};
         
 	
-	this.createRoute = function(name, behavior, template, postUpdate){
+	this.createRoute = function(name, behavior, template, postUpdate, aquireData){
 		this.name = name;
 		this.behavior = behavior;
 		this.template = template;
                 this.postUpdateWeb = postUpdate;
+                this.aquireData = aquireData;
 	}
 	
 	this.getName = function(){
@@ -38,7 +40,7 @@ function Route(){
 	 * handleDataset is an array of templatedata
 	 */
 	this.renderTemplate = function(state, data){
-            var render = Mustache.render(this.getBaseTempalte(state), data);
+            var render = Mustache.render(this.getBaseTempalte(state), this.aquireData());
             //console.log(render);
             return render;
             

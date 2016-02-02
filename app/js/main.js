@@ -43,6 +43,7 @@ socket.init("ws://" + config.getwsAdress() + ":" + config.getwsPort(), messagePa
 router.createRouter("history");
 instanceHandler.linkSocket(socket);
 instanceHandler.linkSocketPromise(socketPromise);
+instanceHandler.linkRouter(router);
 router.linkInstanceHandler(instanceHandler);
 router.linkSocketPromise(socketPromise)
 messageParser.linkInstanceHandler(instanceHandler);

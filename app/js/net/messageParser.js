@@ -35,8 +35,12 @@ function MessageParser(){
                 //console.log(current);
                 instanceHandler.handleIncommingError(current.messageID, current.error);
             }
+            else if(current.done){
+                console.log("done task");
+                instanceHandler.handleIncommingDataRequest("task",current.messageID,current.done);
+            }
             else if(current.response){
-                console.log("response");
+                //console.log("response");
                 console.log(current);
                 var dbO = JSON.parse(current.response);
                 instanceHandler.handleIncommingDataRequest(dbO.classType,current.messageID,dbO);

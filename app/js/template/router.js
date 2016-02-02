@@ -21,8 +21,7 @@ function Router(){
     var socketPromise = null;
     //public
     this.subregex = new RegExp(/(_[A-Z]*)\w+/g);
-        
-	
+        	
     this.createRouter = function(handleHistory){
         routes = [];
         mode = handleHistory;
@@ -54,6 +53,10 @@ function Router(){
                         routes.splice(i,1);
                 }
         }
+    }
+
+    this.getRoutes = function(){
+        return routes;
     }
 
     this.navigate = function(handleReqPath){
@@ -104,7 +107,6 @@ function Router(){
      * Job Functions
      */
     this.listen = function(){	
-        console.log("listen");
         var currentPage = "";
         var subAction = "";
         if(window.location.hash.indexOf("$")){
@@ -129,6 +131,7 @@ function Router(){
                                 routes[i].behavior(subAction);
                                 //render webpage
 
+                                //state, data
                                 routes[i].updateWeb(subAction, "");
                                 //run the post update
                                 routes[i].runPostUpdateWeb();
@@ -136,32 +139,17 @@ function Router(){
                 }
         }
         else if(socketPromise.isPromiseInProgress() && lastPage == currentPage && lastAction == subAction){
-            //check if promise is fulfilled?
-            if(socketPromise.isPromiseFullfilled()){
-                //render requested website
-                for(var i = 0; i < routes.length; i++){
-                        if(routes[i].getName() == currentPage){
-                            routes[i].behavior(subAction);
-                                //render webpage
-                            routes[i].updateWeb(subAction, "");
-                                //run the post update
-                            routes[i].runPostUpdateWeb();
-                        }
-                    }
-            }
-            else{
-                console.log("NOOO");
                 var waitingTemplate = new templateSocketPromise();
                 //display temp page for waiting purpose
                 var anchor = document.getElementById("main-text");
 		var span = document.createElement("span");
                 span.id = "main-text";
-		span.innerHTML = Mustache.render(waitingTemplate.getTemplate(), "");
+                var data = { data: socketPromise.whichTicketIsOpen(), };
+		span.innerHTML = Mustache.render(waitingTemplate.getTemplate(), data);
 		anchor.parentNode.replaceChild(span,anchor);
-            }
-
         }
-
+        
+        //send this value into /dev/null 
+        var devNull = socketPromise.isPromiseFullfilled();
     }
-	
 }

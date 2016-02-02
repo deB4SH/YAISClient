@@ -30,16 +30,24 @@ function Base(){
             var loginFunction = function(){};
             var loginTemplate = new templateLogin();
             var loginPostUpdate = function(){};
-            loginRoute.createRoute("login",loginFunction,loginTemplate,loginPostUpdate);
+            var loginAquireData = function(){};
+            loginRoute.createRoute("login",loginFunction,loginTemplate,loginPostUpdate,loginAquireData);
             this.router.addRoute(loginRoute);
             
             var welcomeRoute = new Route();
             var welcomeFunction = function(){};
             var welcomeTemplate = new templateWelcome();
             var welcomePostUpdate = function(){};
-            welcomeRoute.createRoute("welcome",welcomeFunction,welcomeTemplate,welcomePostUpdate);
+            var welcomeAquireData = function(){};
+            welcomeRoute.createRoute("welcome",welcomeFunction,welcomeTemplate,welcomePostUpdate,welcomeAquireData);
             this.router.addRoute(welcomeRoute);
             
+            var registerRoute = new Route();
+            var registerFunction = function (){ };
+            var registerTemplate = new templateRegister();
+            var registerPostUpdate = function () { };
+            registerRoute.createRoute("register",registerFunction,registerTemplate,registerPostUpdate,function(){});
+            this.router.addRoute(registerRoute);
             
             var roomRoute = new Route();
             var roomFunction = function(){ };
@@ -49,22 +57,28 @@ function Base(){
                  document.getElementById("btnRoomAll").onclick = btnRoom_all;
                  document.getElementById("btnRoomRem").onclick = room_RemRoom;
             };
-            roomRoute.createRoute("room",roomFunction,roomTemplate,roomPostUpdate);
+            var roomAquireData = function(){};
+            roomRoute.createRoute("room",roomFunction,roomTemplate,roomPostUpdate,roomAquireData);
             this.router.addRoute(roomRoute);
 
             var loginRoute = new Route();
             var loginFunction = function(){ };
             var loginTemplate = new templateLogin();
             var loginPostUpdate = function(){ };
-            loginRoute.createRoute("login",loginFunction,loginTemplate,loginPostUpdate);
+            var loginAquireData = function(){};
+            loginRoute.createRoute("login",loginFunction,loginTemplate,loginPostUpdate,loginAquireData);
             this.router.addRoute(loginRoute);
 
-            var registerRoute = new Route();
-            var registerFunction = function (){ };
-            var registerTemplate = new templateRegister();
-            var registerPostUpdate = function () { };
-            registerRoute.createRoute("register",registerFunction,registerTemplate,registerPostUpdate);
-            this.router.addRoute(registerRoute);
+            var errorRoute = new Route();
+            var errorFunction = function (){ };
+            var errorTemplate = new templateERROR();
+            var errorPostUpdate = function () { };
+            var errorAquireData = function(){
+                
+            };
+            errorRoute.createRoute("error",errorFunction,errorTemplate,errorPostUpdate,errorAquireData);
+            this.router.addRoute(errorRoute);
+
 
             //socket
             this.router.linkSocket(this.socket);

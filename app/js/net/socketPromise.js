@@ -56,6 +56,7 @@ function socketPromise(){
                 return false;
             }
         }
+        return true;
     }
     
     this.whichTicketIsOpen = function(){

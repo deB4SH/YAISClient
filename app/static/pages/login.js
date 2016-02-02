@@ -10,7 +10,7 @@ function templateLogin(){
                         <br />\n\
                         <input type='submit' id='inputLoginSubmit' value='Submit' onClick='instanceHandler.sendLogin()'>\n\
                         ";
-    
+       
     this.getTemplate = function(handleReq){
         return baseTemplate;
     }

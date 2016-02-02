@@ -9,6 +9,9 @@ function InstanceHandler(){
     var user = new mdlUser();
     var socket = null;
     var socketPromise = null;
+    var router = null;
+    var latestErrorMessage =  "";
+    
     
     //public
     this.linkSocket = function(handleSocket){
@@ -18,6 +21,14 @@ function InstanceHandler(){
     this.linkSocketPromise = function(handleSocketPromise){
         socketPromise = handleSocketPromise;
         socketPromise.clearList();
+    }
+    
+    this.linkRouter = function(handleRouter){
+        router = handleRouter;
+    }
+    
+    this.getLatestErrorMessage = function(){
+        return latestErrorMessage;
     }
     
     this.addRoom = function(handleRoom){
@@ -132,6 +143,8 @@ function InstanceHandler(){
     this.handleIncommingError = function(messageID, reason){
         console.log("handle incomming error");
         socketPromise.addReceivedID(messageID);
+        latestErrorMessage = reason;
+        router.navigate("error");
     }
     
     this.handleIncommingDataRequest = function(handleClassType, messageID ,data){
@@ -161,7 +174,7 @@ function InstanceHandler(){
                     var obj = JSON.parse(data[key]);
                     var mdl = new modelDossier();
                     mdl.createDossier(obj.id,obj.name,obj.archive,obj.use,obj.created);
-                    this.add
+                    //this.add
                 }
             }
         }
@@ -171,6 +184,10 @@ function InstanceHandler(){
         }
         //check if classtype is cabinetrow
         else if(handleClassType == "cabinetrow"){
+            
+        }
+        
+        else if(handleClassType == "task"){
             
         }
     }
