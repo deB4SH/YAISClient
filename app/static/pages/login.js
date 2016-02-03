@@ -11,7 +11,17 @@ function templateLogin(){
                         <input type='submit' id='inputLoginSubmit' value='Submit' onClick='instanceHandler.sendLogin()'>\n\
                         ";
        
+    var successTempalte =   "HOME>LOGIN <br/>\n\
+                            \n\
+                            User successful logged in with username: {{data}}\n\
+                            ";
+       
     this.getTemplate = function(handleReq){
-        return baseTemplate;
+        if(handleReq == "success"){
+            return successTempalte;
+        }
+        else{
+            return baseTemplate;
+        }
     }
 }

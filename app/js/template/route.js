@@ -39,9 +39,10 @@ function Route(){
 	/**
 	 * handleDataset is an array of templatedata
 	 */
-	this.renderTemplate = function(state, data){
-            var render = Mustache.render(this.getBaseTempalte(state), this.aquireData());
-            //console.log(render);
+	this.renderTemplate = function(state){
+            var data =  this.aquireData();
+            var functemplate = this.getBaseTempalte(state);
+            var render = Mustache.render(this.getBaseTempalte(state),data);
             return render;
             
 	}
@@ -49,11 +50,11 @@ function Route(){
 	/**
 	 * change contents on webpage
 	 */
-	this.updateWeb = function(state, data){
+	this.updateWeb = function(state){
 		var anchor = document.getElementById("main-text");
 		var span = document.createElement("span");
                 span.id = "main-text";
-		span.innerHTML = this.renderTemplate(state, data);
+		span.innerHTML = this.renderTemplate(state);
 		anchor.parentNode.replaceChild(span,anchor);
 	}
 

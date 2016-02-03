@@ -58,6 +58,17 @@ function Router(){
     this.getRoutes = function(){
         return routes;
     }
+    
+    this.updateSideInfo = function(){
+        var waitingTemplate = new templateSideinfo();
+        //display temp page for waiting purpose
+        var anchor = document.getElementById("side-text");
+        var span = document.createElement("span");
+        span.id = "side-text";
+        var data = { currentUser: instanceHandler.getUser().getUsername(), };
+        span.innerHTML = Mustache.render(waitingTemplate.getTemplate(), data);
+        anchor.parentNode.replaceChild(span,anchor);
+    }
 
     this.navigate = function(handleReqPath){
         var handlePath = "";
@@ -103,6 +114,8 @@ function Router(){
         }
     }
 
+    
+
     /*
      * Job Functions
      */
@@ -129,14 +142,15 @@ function Router(){
 
                                 //base behavior (alerts, pre render stuff
                                 routes[i].behavior(subAction);
-                                //render webpage
 
-                                //state, data
-                                routes[i].updateWeb(subAction, "");
+                                //handles state to select right template
+                                routes[i].updateWeb(subAction);
                                 //run the post update
                                 routes[i].runPostUpdateWeb();
                         }
                 }
+                
+            router.updateSideInfo();
         }
         else if(socketPromise.isPromiseInProgress() && lastPage == currentPage && lastAction == subAction){
                 var waitingTemplate = new templateSocketPromise();

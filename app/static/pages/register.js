@@ -11,7 +11,18 @@ function templateRegister(){
                         <input type='submit' id='inputLoginSubmit' value='Submit' onClick='instanceHandler.sendRegister()'>\n\
                         ";
     
+    var successTempalte =   "HOME>REGISTER <br/>\n\
+                            \n\
+                            User successful registerd with username: {{data}}\n\
+                            ";
+    
     this.getTemplate = function(handleReq){
-        return baseTemplate;
+        if(handleReq == "success"){
+            return successTempalte;
+        }
+        else{
+            return baseTemplate;
+        }
+        
     }
 }

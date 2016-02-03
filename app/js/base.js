@@ -30,7 +30,16 @@ function Base(){
             var loginFunction = function(){};
             var loginTemplate = new templateLogin();
             var loginPostUpdate = function(){};
-            var loginAquireData = function(){};
+            var loginAquireData = function(){
+                if(window.location.hash.indexOf("$")){
+                    subAction = window.location.hash.split("$")[1];
+                    if(subAction == "success"){
+                        var data = { data: instanceHandler.getUser().getUsername(), };
+                        return data;
+                    }
+                }
+                return "";
+            };
             loginRoute.createRoute("login",loginFunction,loginTemplate,loginPostUpdate,loginAquireData);
             this.router.addRoute(loginRoute);
             
@@ -45,8 +54,18 @@ function Base(){
             var registerRoute = new Route();
             var registerFunction = function (){ };
             var registerTemplate = new templateRegister();
-            var registerPostUpdate = function () { };
-            registerRoute.createRoute("register",registerFunction,registerTemplate,registerPostUpdate,function(){});
+            var registerPostUpdate = function () {};
+            var registerAquireData = function(){
+                if(window.location.hash.indexOf("$")){
+                    subAction = window.location.hash.split("$")[1];
+                    if(subAction == "success"){
+                        var data = { data: instanceHandler.getUser().getUsername(), };
+                        return data;
+                    }
+                }
+                return "";
+            }
+            registerRoute.createRoute("register",registerFunction,registerTemplate,registerPostUpdate,registerAquireData);
             this.router.addRoute(registerRoute);
             
             var roomRoute = new Route();
@@ -57,7 +76,16 @@ function Base(){
                  document.getElementById("btnRoomAll").onclick = btnRoom_all;
                  document.getElementById("btnRoomRem").onclick = room_RemRoom;
             };
-            var roomAquireData = function(){};
+            var roomAquireData = function(){
+                if(window.location.hash.indexOf("$")){
+                    subAction = window.location.hash.split("$")[1];
+                    if(subAction == "all"){
+                        var data = { data: instanceHandler.getUser().getUsername(), };
+                        return data;
+                    }
+                }
+                return "";
+            };
             roomRoute.createRoute("room",roomFunction,roomTemplate,roomPostUpdate,roomAquireData);
             this.router.addRoute(roomRoute);
 
@@ -74,7 +102,8 @@ function Base(){
             var errorTemplate = new templateERROR();
             var errorPostUpdate = function () { };
             var errorAquireData = function(){
-                
+                var data = {data: instanceHandler.getLatestErrorMessage(),};
+                return data;
             };
             errorRoute.createRoute("error",errorFunction,errorTemplate,errorPostUpdate,errorAquireData);
             this.router.addRoute(errorRoute);

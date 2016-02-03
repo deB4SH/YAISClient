@@ -6,11 +6,16 @@ function socketPromise(){
      */
     var openIDList = new Array();
     var closedIDList = new Array();
+    var fulfillmentFunction = function(){};
     
     
     /**
      * public fields and functions
      */
+    
+    this.setfulfillmentFunction = function(handleFunction){
+        fulfillmentFunction = handleFunction;
+    }
     
     this.clearList = function(){
         openIDList = new Array();
@@ -50,6 +55,7 @@ function socketPromise(){
             }
             if(checkCounter == openIDList.length){
                 this.clearList();
+                fulfillmentFunction();
                 return true;
             }
             else{

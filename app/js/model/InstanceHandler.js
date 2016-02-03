@@ -12,6 +12,7 @@ function InstanceHandler(){
     var router = null;
     var latestErrorMessage =  "";
     
+    user.initAnon();
     
     //public
     this.linkSocket = function(handleSocket){
@@ -29,6 +30,14 @@ function InstanceHandler(){
     
     this.getLatestErrorMessage = function(){
         return latestErrorMessage;
+    }
+    
+    this.getPromise = function(){
+        return socketPromise;
+    }
+    
+    this.getUser = function(){
+        return user;
     }
     
     this.addRoom = function(handleRoom){
@@ -95,6 +104,9 @@ function InstanceHandler(){
         var u = document.getElementById("inputUsername").value;
         var p = document.getElementById("inputPassword").value;
         user.newUser(u,p);
+        socketPromise.setfulfillmentFunction(new function(){
+           router.navigate("login$success");
+        });
         this.manageDataRquest("user","login");
     }
     
@@ -103,6 +115,9 @@ function InstanceHandler(){
         var u = document.getElementById("inputUsername").value;
         var p = document.getElementById("inputPassword").value;
         user.newUser(u,p);
+        socketPromise.setfulfillmentFunction(new function(){
+           router.navigate("register$success");
+        });
         this.manageDataRquest("user","register");
     }
     
