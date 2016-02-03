@@ -305,6 +305,33 @@ function InstanceHandler(){
         this.manageDataRquest("cabinet","remove");
     }
     
+    this.sendNewCabinetRow = function(){
+        //get cabinet informations
+        var cabinetletter = document.getElementById("inputCabinetRowLetter").value;
+        var cabinetRoomID = document.getElementById("inputCabinetRowCabinetID").value;
+        var cabinetRowCount = document.getElementById("inputCabinetRowRowCount").value;
+        tmpCabinetRow = new modelCabinetRow();
+        tmpCabinetRow.buildByNewInput(cabinetletter,cabinetRoomID,cabinetRowCount);
+        socketPromise.setfulfillmentFunction(new function(){
+           router.navigate("cabinetrow$newSuccess");
+        });
+        this.manageDataRquest("cabinetrow","new");
+        
+    }
+    
+    this.sendRemoveCabinetRow = function(){
+        //get information
+        var id = document.getElementById("inputID").value;
+        tmpCabinetRow = new modelCabinetRow();
+        tmpCabinetRow.setID(id);
+        socketPromise.setfulfillmentFunction(new function(){
+           router.navigate("cabinetrow$remSuccess");
+           var rmid = tmpCabinetRow.getID();
+           instanceHandler.delCabinetRowByID(rmid);
+        });
+        this.manageDataRquest("cabinetrow","remove");
+    }
+    
     this.manageDataRquest = function(handleClassType, action){
         var classType = handleClassType.replace("#","");
         if(classType == "room"){
@@ -355,6 +382,32 @@ function InstanceHandler(){
                 socketPromise.addNewOpenID(message.getMessageID());
                 socket.sendMessage(message.buildRequest());
                 tmpCabinet = null;
+            }
+        }
+        else if(classType == "cabinetrow"){
+            if(action == "new"){
+                //nothing to request but stuff to send
+                var sendObject = new Object();
+                sendObject.cabinetrowLetter = tmpCabinetRow.getCabinetRowLetter();
+                sendObject.cabinetrowCabinetID = tmpCabinetRow.getCabinetRowCabinetID();
+                sendObject.cabinetrowRowCount = tmpCabinetRow.getCabinetRowRowCount();
+                message = new Message(messageType.getDataCode(), messageSubType.getDataCabinetRow(), messageActionType.newAction(), JSON.stringify(sendObject));
+                socketPromise.addNewOpenID(message.getMessageID());
+                socket.sendMessage(message.buildRequest());
+                tmpCabinetRow =  null; //remove old object
+            }
+            if(action == "all"){
+                message = new Message(messageType.getDataCode(), messageSubType.getDataCabinetRow(), messageActionType.loadAction(),"");
+                socketPromise.addNewOpenID(message.getMessageID());
+                socket.sendMessage(message.buildRequest());
+            }
+            if(action == "remove"){
+                var sendObject = new Object();
+                sendObject.id = tmpCabinetRow.getID();
+                message = new Message(messageType.getDataCode(), messageSubType.getDataCabinetRow(), messageActionType.removeAction(),JSON.stringify(sendObject));
+                socketPromise.addNewOpenID(message.getMessageID());
+                socket.sendMessage(message.buildRequest());
+                tmpCabinetRow = null;
             }
         }
         else if(classType == "user"){
@@ -422,7 +475,14 @@ function InstanceHandler(){
         }
         //check if classtype is cabinetrow
         else if(handleClassType == "cabinetrow"){
-            
+            for(var key in data){
+                if(key.search(/([0-9])+/) != -1){
+                    var obj = JSON.parse(data[key]);
+                    var model = new modelCabinetRow();
+                    model.createCabinetRow(obj.id,obj.idLetter,obj.cabinetID,obj.rowCount);
+                    this.addCabinetRow(model);
+                }
+            }
         }
         
         else if(handleClassType == "task"){

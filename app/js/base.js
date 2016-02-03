@@ -142,6 +142,43 @@ function Base(){
             cabinetRoute.createRoute("cabinet",cabinetFunction,cabinetTemplate,cabinetPostUpdate,cabinetAquireData);
             this.router.addRoute(cabinetRoute);
 
+            var cabinetrowRoute = new Route();
+            var cabinetrowFunction = function(){ };
+            var cabinetrowTemplate = new templateCabinetRow();
+            var cabinetrowPostUpdate = function(){
+                 document.getElementById("btnCabinetRowNew").onclick = cabinetrow_NewCabinetRow;
+                 document.getElementById("btnCabinetRowAll").onclick = btnCabinetRow_all;
+                 document.getElementById("btnCabinetRowRem").onclick = cabinetrow_RemCabinetRow;
+                 
+                 if(window.location.hash.indexOf("$")){
+                    subAction = window.location.hash.split("$")[1];
+                    if(subAction == "all"){
+                        //get all template data for rooms
+                        var cabinetrowList = instanceHandler.getAllCabinetRow();
+                        var modelTemplate = new templateModelCabinetRow();
+                        var anchor = document.getElementById("cabinetrowAnchor");                        
+                        for(var i = 0; i < cabinetrowList.length; i++){
+                            var span = document.createElement("span");
+                            var oData = { cabinetrowID: cabinetrowList[i].getID(), cabinetrowIDLetter: cabinetrowList[i].getCabinetRowLetter() ,cabinetrowCabinetID: cabinetrowList[i].getCabinetRowCabinetID(), cabinetrowRowCount: cabinetrowList[i].getCabinetRowRowCount(), }
+                            span.id = "cabinetrow-content-"+i;
+                            span.innerHTML = Mustache.render(modelTemplate.getTemplate("list"), oData);
+                            anchor.parentNode.appendChild(span);
+                        }       
+                    }
+                }
+            };
+            var cabinetrowAquireData = function(){
+                if(window.location.hash.indexOf("$")){
+                    subAction = window.location.hash.split("$")[1];
+                    if(subAction == "all"){
+                       
+                    }
+                }
+                return "";
+            };
+            cabinetrowRoute.createRoute("cabinetrow",cabinetrowFunction,cabinetrowTemplate,cabinetrowPostUpdate,cabinetrowAquireData);
+            this.router.addRoute(cabinetrowRoute);
+
             var loginRoute = new Route();
             var loginFunction = function(){ };
             var loginTemplate = new templateLogin();

@@ -7,7 +7,7 @@ function modelCabinetRow() {
     var mustacheObject = null;
     var template = new templateModelCabinet();
 
-    this.createRoom = function (handleid, handlecabinetletter, handlecabinetid, handlerowcount) {
+    this.createCabinetRow = function (handleid, handlecabinetletter, handlecabinetid, handlerowcount) {
         id = handleid;
         cabinetletter = handlecabinetletter;
         cabinetid = handlecabinetid;
@@ -27,15 +27,15 @@ function modelCabinetRow() {
         id = hid;
     }
 
-    this.getCabinetLetter = function () {
+    this.getCabinetRowLetter = function () {
         return cabinetletter;
     }
 
-    this.getCabinetCabinetID = function () {
+    this.getCabinetRowCabinetID = function () {
         return cabinetid;
     }
 
-    this.getCabinetRowCount = function () {
+    this.getCabinetRowRowCount = function () {
         return cabinetrowCount;
     }
 
