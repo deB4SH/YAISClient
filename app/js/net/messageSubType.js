@@ -23,11 +23,11 @@ function MessageSubType(){
 		return "02";
 	}
 	
-	this.getCabinetRow = function(){
+	this.getDataCabinetRow = function(){
 		return "03";
 	}
 	
-	this.getDossier = function(){
+	this.getDataDossier = function(){
 		return "04";
 	}
 }

@@ -19,6 +19,10 @@ function modelRoom(){
         location = handlelocation;
     }
     
+    this.createRoomFromInputID = function(handleid){
+        id = handleid;
+    }
+    
     this.renderTempalte = function(handle){
         var render = Mustache.render(template.getBaseTemplate(handle), mustacheObject);
         return render;

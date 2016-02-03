@@ -105,6 +105,43 @@ function Base(){
             roomRoute.createRoute("room",roomFunction,roomTemplate,roomPostUpdate,roomAquireData);
             this.router.addRoute(roomRoute);
 
+            var cabinetRoute = new Route();
+            var cabinetFunction = function(){ };
+            var cabinetTemplate = new templateCabinet();
+            var cabinetPostUpdate = function(){
+                 document.getElementById("btnCabinetNew").onclick = cabinet_NewCabinet;
+                 document.getElementById("btnCabinetAll").onclick = btnCabinet_all;
+                 document.getElementById("btnCabinetRem").onclick = cabinet_RemCabinet;
+                 
+                 if(window.location.hash.indexOf("$")){
+                    subAction = window.location.hash.split("$")[1];
+                    if(subAction == "all"){
+                        //get all template data for rooms
+                        var cabinetList = instanceHandler.getAllCabinet();
+                        var modelTemplate = new templateModelCabinet();
+                        var anchor = document.getElementById("cabinetAnchor");                        
+                        for(var i = 0; i < cabinetList.length; i++){
+                            var span = document.createElement("span");
+                            var oData = { cabinetID: cabinetList[i].getID(), cabinetIDLetter: cabinetList[i].getCabinetLetter() ,cabinetRoomID: cabinetList[i].getCabinetRoomID(), cabinetRowCount: cabinetList[i].getCabinetRowCount(), }
+                            span.id = "cabinet-content-"+i;
+                            span.innerHTML = Mustache.render(modelTemplate.getTemplate("list"), oData);
+                            anchor.parentNode.appendChild(span);
+                        }       
+                    }
+                }
+            };
+            var cabinetAquireData = function(){
+                if(window.location.hash.indexOf("$")){
+                    subAction = window.location.hash.split("$")[1];
+                    if(subAction == "all"){
+                       
+                    }
+                }
+                return "";
+            };
+            cabinetRoute.createRoute("cabinet",cabinetFunction,cabinetTemplate,cabinetPostUpdate,cabinetAquireData);
+            this.router.addRoute(cabinetRoute);
+
             var loginRoute = new Route();
             var loginFunction = function(){ };
             var loginTemplate = new templateLogin();

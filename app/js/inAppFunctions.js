@@ -25,9 +25,20 @@ function btnRoot_register(){
 }
 document.getElementById("btnRootRegister").onclick = btnRoot_register;
 
+function btnRoot_cabinet(){
+    router.navigate("cabinet");
+}
+document.getElementById("btnRootCabinet").onclick = btnRoot_cabinet;
+
+
 function btnRoom_all(){
     instanceHandler.manageDataRquest("room","all");
     room_AllRoom();
+}
+
+function btnCabinet_all(){
+    instanceHandler.manageDataRquest("cabinet","all");
+    cabinet_AllCabinet();
 }
 
 function room_NewRoom(){
@@ -40,6 +51,18 @@ function room_AllRoom(){
 
 function room_RemRoom(){
     router.navigate("room$remove");
+}
+
+function cabinet_NewCabinet(){
+    router.navigate("cabinet$new");
+}
+
+function cabinet_AllCabinet(){
+    router.navigate("cabinet$all");
+}
+
+function cabinet_RemCabinet(){
+    router.navigate("cabinet$remove");
 }
 
 

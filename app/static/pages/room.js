@@ -45,6 +45,25 @@ function templateRoom(){
                         <div id='roomAnchor'></div>\n\
                         ";
     
+    var roomRemoveTemplate = " \n\
+                        <button type='button' id='btnRoomNew'>New Room</button> \n\
+                        <button type='button' id='btnRoomAll'>Display all Rooms</button> \n\
+                        <button type='button' id='btnRoomRem'>Remove Room</button>\n\
+                        <br\><br\> \n\
+                        Please enter the following informations. <br/>\n\
+                        \n\
+                        ID: <input type='text' name='id' id='inputID'><br /> \n\
+                        <br />\n\
+                        <input type='submit' id='inputNewRoomSubmit' value='Submit' onClick='instanceHandler.sendRemoveRoom()'>\n\
+                        ";
+    
+    var roomSuccessRemove = "<button type='button' id='btnRoomNew'>New Room</button> \n\
+                            <button type='button' id='btnRoomAll'>Display all Rooms</button> \n\
+                            <button type='button' id='btnRoomRem'>Remove Room</button>\n\ <br/>\n\
+                            \n\
+                            Room successfully removed: {{data}}\n\
+                            ";
+    
     this.getTemplate = function(handleReq){
         if(handleReq == "new"){
             return roomNewTemplate;
@@ -54,6 +73,12 @@ function templateRoom(){
         }
         if(handleReq == "all"){
             return roomListTemplate;
+        }
+        if(handleReq == "remSuccess"){
+            return roomSuccessRemove;
+        }
+        if(handleReq == "remove"){
+            return roomRemoveTemplate;
         }
         else{
             return baseTemplate;
