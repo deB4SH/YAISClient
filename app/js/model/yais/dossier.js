@@ -5,14 +5,20 @@ function modelDossier(){
     var archiveObject = "";
     var lastUse = "";
     var createdOn = "";
+    var cabinetrowID = "";
     var mustacheObject = null;
     var template =  new templateModelRoom();
     
-    this.createDossier = function(handleid,handleDossierName,handleArchiveObject,handleUse,handleCreated){
+    this.createDossier = function(handleid,handleDossierName,handleArchiveObject,handleUse,handleCreated, handleCabinetRowID){
         id = handleid;
         name = handleDossierName;
+        archiveObject = handleArchiveObject;
         lastUse = handleUse;
         createdOn = handleCreated;
+        cabinetrowID = handleCabinetRowID;
+        
+        console.log(archiveObject);
+        console.log(createdOn);
         
         mustacheObject = {
             dossierID : id,
@@ -22,6 +28,13 @@ function modelDossier(){
         };
     }
     
+    this.buildByNewInput = function(handledossierName,handledossierArchiveObject,handleCreated, handleCabinetRowID){
+        name = handledossierName;
+        archiveObject = handledossierArchiveObject;
+        createdOn = handleCreated;
+        cabinetrowID = handleCabinetRowID;
+    }
+    
     this.renderTempalte = function(handle){
         var render = Mustache.render(template.getBaseTemplate(handle), mustacheObject);
         return render;
@@ -29,6 +42,10 @@ function modelDossier(){
     
     this.getID = function(){
         return id;
+    }
+    
+    this.setID = function(handleid){
+        id = handleid;
     }
     
     this.getName = function(){
@@ -41,6 +58,10 @@ function modelDossier(){
     
     this.getCreateOn = function(){
         return createdOn;
+    }
+    
+    this.getCabinetRowID = function(){
+        return cabinetrowID;
     }
     
     this.getMustacheObject = function(){

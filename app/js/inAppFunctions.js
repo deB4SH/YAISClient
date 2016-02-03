@@ -35,6 +35,11 @@ function btnRoot_cabinetrow(){
 }
 document.getElementById("btnRootCabinetRow").onclick = btnRoot_cabinetrow;
 
+function btnRoot_dossier(){
+    router.navigate("dossier");
+}
+document.getElementById("btnRootDossier").onclick = btnRoot_dossier;
+
 
 function btnRoom_all(){
     instanceHandler.manageDataRquest("room","all");
@@ -49,6 +54,11 @@ function btnCabinet_all(){
 function btnCabinetRow_all(){
     instanceHandler.manageDataRquest("cabinetrow","all");
     cabinetrow_AllCabinet();
+}
+
+function btnDossier_all(){
+    instanceHandler.manageDataRquest("dossier","all");
+    dossier_AllDossier();
 }
 
 function room_NewRoom(){
@@ -85,6 +95,18 @@ function cabinetrow_AllCabinet(){
 
 function cabinetrow_RemCabinetRow(){
     router.navigate("cabinetrow$remove");
+}
+
+function dossier_NewDossier(){
+    router.navigate("dossier$new");
+}
+
+function dossier_AllDossier(){
+    router.navigate("dossier$all");
+}
+
+function dossier_RemDossier(){
+    router.navigate("dossier$remove");
 }
 
 /**

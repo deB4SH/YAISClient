@@ -224,6 +224,17 @@ function InstanceHandler(){
         }
     }
     
+    this.delDossierByID = function(handleID){
+        var index = -1;
+        //find index
+        for(var i=0; i < dossierStorage.length; i++){
+            if(handleID == dossierStorage[i].getID()){
+                index = i;
+            }
+        }
+        var dump = dossierStorage.splice(index,1);
+    }
+    
     this.addDossier = function(handleDossier){
         dossierStorage.push(handleDossier);
     }
@@ -332,6 +343,34 @@ function InstanceHandler(){
         this.manageDataRquest("cabinetrow","remove");
     }
     
+    this.sendNewDossier = function(){
+        //get cabinet informations
+        var dossierName = document.getElementById("inputDossierName").value;
+        var dossierArchiveName = document.getElementById("inputDossierArchiveName").value;
+        var dossierCreatedOn = document.getElementById("inputDossierCreatedOn").value;
+        var dossierCabinetRowID = document.getElementById("inputDossierCabinetRowID").value;
+        tmpDossier = new modelDossier();
+        tmpDossier.buildByNewInput(dossierName,dossierArchiveName,dossierCreatedOn,dossierCabinetRowID);
+        socketPromise.setfulfillmentFunction(new function(){
+           router.navigate("dossier$newSuccess");
+        });
+        this.manageDataRquest("dossier","new");
+        
+    }
+    
+    this.sendRemoveDossier= function(){
+        //get information
+        var id = document.getElementById("inputID").value;
+        tmpDossier = new modelDossier();
+        tmpDossier.setID(id);
+        socketPromise.setfulfillmentFunction(new function(){
+           router.navigate("dossier$remSuccess");
+           var rmid = tmpDossier.getID();
+           instanceHandler.delDossierByID(rmid);
+        });
+        this.manageDataRquest("dossier","remove");
+    }
+    
     this.manageDataRquest = function(handleClassType, action){
         var classType = handleClassType.replace("#","");
         if(classType == "room"){
@@ -410,6 +449,33 @@ function InstanceHandler(){
                 tmpCabinetRow = null;
             }
         }
+        else if(classType == "dossier"){
+            if(action == "new"){
+                //nothing to request but stuff to send
+                var sendObject = new Object();
+                sendObject.dossierName = tmpDossier.getName();
+                sendObject.dossierArchiveObject = tmpDossier.getArchiveObject();
+                sendObject.dossierCreatedOn = tmpDossier.getCreateOn();
+                sendObject.dossierCabinetRowID = tmpDossier.getCabinetRowID();
+                message = new Message(messageType.getDataCode(), messageSubType.getDataDossier(), messageActionType.newAction(), JSON.stringify(sendObject));
+                socketPromise.addNewOpenID(message.getMessageID());
+                socket.sendMessage(message.buildRequest());
+                tmpDossier=  null; //remove old object
+            }
+            if(action == "all"){
+                message = new Message(messageType.getDataCode(), messageSubType.getDataDossier(), messageActionType.loadAction(),"");
+                socketPromise.addNewOpenID(message.getMessageID());
+                socket.sendMessage(message.buildRequest());
+            }
+            if(action == "remove"){
+                var sendObject = new Object();
+                sendObject.id = tmpDossier.getID();
+                message = new Message(messageType.getDataCode(), messageSubType.getDataDossier(), messageActionType.removeAction(),JSON.stringify(sendObject));
+                socketPromise.addNewOpenID(message.getMessageID());
+                socket.sendMessage(message.buildRequest());
+                tmpDossier = null;
+            }
+        }
         else if(classType == "user"){
             var uMessageType = "";
             var uMessageSubType = "";
@@ -457,8 +523,9 @@ function InstanceHandler(){
                 if(key.search(/([0-9])+/) != -1){
                     var obj = JSON.parse(data[key]);
                     var mdl = new modelDossier();
-                    mdl.createDossier(obj.id,obj.name,obj.archive,obj.use,obj.created);
-                    //this.add
+                    //(handleid,handleDossierName,handleArchiveObject,handleUse,handleCreated, handleCabinetRowID){
+                    mdl.createDossier(obj.id,obj.name,obj.archive,obj.use,obj.created,obj.cabinetrowid);
+                    this.addDossier(mdl);
                 }
             }
         }

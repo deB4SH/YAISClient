@@ -179,6 +179,46 @@ function Base(){
             cabinetrowRoute.createRoute("cabinetrow",cabinetrowFunction,cabinetrowTemplate,cabinetrowPostUpdate,cabinetrowAquireData);
             this.router.addRoute(cabinetrowRoute);
 
+            var dossierRoute = new Route();
+            var dossierFunction = function(){ };
+            var dossierTemplate = new templateDossier();
+            var dossierPostUpdate = function(){
+                 document.getElementById("btnDossierNew").onclick = dossier_NewDossier;
+                 document.getElementById("btnDossierAll").onclick = btnDossier_all;
+                 document.getElementById("btnDossierRem").onclick = dossier_RemDossier;
+                 
+                 if(window.location.hash.indexOf("$")){
+                    subAction = window.location.hash.split("$")[1];
+                    if(subAction == "all"){
+                        //get all template data for rooms
+                        var dossierList = instanceHandler.getAllDossier();
+                        var modelTemplate = new templateModelDossier();
+                        var anchor = document.getElementById("dossierAnchor");                        
+                        for(var i = 0; i < dossierList.length; i++){
+                            var span = document.createElement("span");
+                            var oData = { dossierID: dossierList[i].getID(), dossierName: dossierList[i].getName() ,
+                                            dossierArchiveObject: dossierList[i].getArchiveObject(), dossierCreatedOn: dossierList[i].getCreateOn(),
+                                            dossierCabinetRowID: dossierList[i].getCabinetRowID(), };
+                            console.log(oData);
+                            span.id = "dossier-content-"+i;
+                            span.innerHTML = Mustache.render(modelTemplate.getTemplate("list"), oData);
+                            anchor.parentNode.appendChild(span);
+                        }       
+                    }
+                }
+            };
+            var dossierAquireData = function(){
+                if(window.location.hash.indexOf("$")){
+                    subAction = window.location.hash.split("$")[1];
+                    if(subAction == "all"){
+                       
+                    }
+                }
+                return "";
+            };
+            dossierRoute.createRoute("dossier",dossierFunction,dossierTemplate,dossierPostUpdate,dossierAquireData);
+            this.router.addRoute(dossierRoute);
+
             var loginRoute = new Route();
             var loginFunction = function(){ };
             var loginTemplate = new templateLogin();
