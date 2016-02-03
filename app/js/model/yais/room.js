@@ -5,7 +5,6 @@ function modelRoom(){
     var mustacheObject = null;
     var template =  new templateModelRoom();
     
-    
     this.createRoom = function(handleid,handlelocation){
         id = handleid;
         location = handlelocation;
@@ -14,6 +13,10 @@ function modelRoom(){
             roomID: handleid,
             roomLocation: handlelocation
         };
+    }
+    
+    this.createRoomFromInput = function(handlelocation){
+        location = handlelocation;
     }
     
     this.renderTempalte = function(handle){

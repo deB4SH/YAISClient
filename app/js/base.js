@@ -75,13 +75,29 @@ function Base(){
                  document.getElementById("btnRoomNew").onclick = room_NewRoom;
                  document.getElementById("btnRoomAll").onclick = btnRoom_all;
                  document.getElementById("btnRoomRem").onclick = room_RemRoom;
+                 
+                 if(window.location.hash.indexOf("$")){
+                    subAction = window.location.hash.split("$")[1];
+                    if(subAction == "all"){
+                        //get all template data for rooms
+                        var roomList = instanceHandler.getAllRoom();
+                        var modelTemplate = new templateModelRoom();
+                        var anchor = document.getElementById("roomAnchor");                        
+                        for(var i = 0; i < roomList.length; i++){
+                            var span = document.createElement("span");
+                            var oData = { roomID: roomList[i].getID(), roomLocation: roomList[i].getLocation(), }
+                            span.id = "room-content-"+i;
+                            span.innerHTML = Mustache.render(modelTemplate.getTemplate("list"), oData);
+                            anchor.parentNode.appendChild(span);
+                        }       
+                    }
+                }
             };
             var roomAquireData = function(){
                 if(window.location.hash.indexOf("$")){
                     subAction = window.location.hash.split("$")[1];
                     if(subAction == "all"){
-                        var data = { data: instanceHandler.getUser().getUsername(), };
-                        return data;
+                       
                     }
                 }
                 return "";

@@ -11,6 +11,11 @@ function InstanceHandler(){
     var socketPromise = null;
     var router = null;
     var latestErrorMessage =  "";
+    var tmpRoom = null;
+    var tmpDossier = null;
+    var tmpCabinet = null;
+    var tmpCabinetRow = null;
+    
     
     user.initAnon();
     
@@ -121,11 +126,28 @@ function InstanceHandler(){
         this.manageDataRquest("user","register");
     }
     
+    this.sendNewRoom = function(){
+        //get room informations
+        var location = document.getElementById("inputLocation").value;
+        tmpRoom = new modelRoom();
+        tmpRoom.createRoomFromInput(location);
+        socketPromise.setfulfillmentFunction(new function(){
+           router.navigate("room$newSuccess");
+        });
+        this.manageDataRquest("room","new");
+    }
+    
     this.manageDataRquest = function(handleClassType, action){
         var classType = handleClassType.replace("#","");
         if(classType == "room"){
             if(action == "new"){
-                //nothing to request
+                //nothing to request but stuff to send
+                var sendObject = new Object();
+                sendObject.location = tmpRoom.getLocation();
+                message = new Message(messageType.getDataCode(), messageSubType.getDataRoom(), messageActionType.newAction(), JSON.stringify(sendObject));
+                socketPromise.addNewOpenID(message.getMessageID());
+                socket.sendMessage(message.buildRequest());
+                tmpRoom =  null; //remove old object
             }
             if(action == "all"){
                 message = new Message(messageType.getDataCode(), messageSubType.getDataRoom(), messageActionType.loadAction(),"");
